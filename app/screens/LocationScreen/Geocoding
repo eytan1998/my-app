@@ -1,0 +1,16 @@
+import React, { useState } from 'react';
+import { LocationProvider, useLocation } from '../../hooks/LocationContext';
+import * as Location from 'expo-location';
+
+const { currentCoordinates, setCurrentCoordinates } = useLocation();
+const [error, setError] = useState('');
+
+export const setCoordinatesFromAddress = async (address: string) => {
+        setError('');
+        const geocode = await Location.geocodeAsync(address); // Ensure function is imported
+        if (geocode.length === 0) {
+            throw new Error('Address not found');
+        }
+        const { latitude, longitude, altitude } = geocode[0];
+        setCurrentCoordinates({ latitude, longitude, altitude });
+};
