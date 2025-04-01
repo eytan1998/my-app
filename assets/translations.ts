@@ -11,6 +11,8 @@ export const Translations = {
     welcome: "Welcome to the app!",
     hebrewDate: "Hebrew Date",
     sunrise: "Sunrise",
+    plag_mincha: "Plag Mincha",
+    tzet_kochavim: "Tzet Kochavim",
     sunset: "Sunset",
     daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
   },
@@ -24,6 +26,8 @@ export const Translations = {
     welcome: "ברוכים הבאים לאפליקציה!",
     hebrewDate: "תאריך עברי",
     sunrise: "זריחה",
+    plag_mincha: "פלג מנחה",
+    tzet_kochavim: "צאת הכוכבים",
     sunset: "שקיעה",
     daysOfWeek: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
 
