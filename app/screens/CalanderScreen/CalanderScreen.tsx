@@ -9,17 +9,14 @@ import Month from '@/app/screens/CalanderScreen/Month';
 import { ComplexZmanimCalendar, GeoLocation } from 'kosher-zmanim';
 import DateUtils, {zmanim} from '@/app/utils/DateUtils';
 import { directions } from '@/assets/LanguageConfig';
+import { ScrollView } from 'react-native';
 
 const HomeScreen = () => {
   const { theme } = useTheme();
   const { currentCoordinates } = useLocation();
   const { translations, direction } = useLanguage();
-  const startDate = new Date();
-  const endDate = new Date();
-  endDate.setMonth(startDate.getMonth() + 1);
-
-  const dateUtils = new DateUtils(startDate, currentCoordinates);
-
+  const dateUtils = new DateUtils(new Date(), currentCoordinates);
+  const { startOfDay: startDate, endOfDay: endDate } = dateUtils.getJewishStartAndEndMonth();
   return (
     
     <View style={styles.container}>
@@ -34,8 +31,12 @@ const HomeScreen = () => {
       {'\n'}
       </Text>
       <DaysHeader />
-      <Month startDate={startDate} endDate={endDate} />
-        
+        <ScrollView>
+          <Month startDate={startDate} endDate={endDate} />
+          <Month startDate={startDate} endDate={endDate} />
+          <Month startDate={startDate} endDate={endDate} />
+          <Month startDate={startDate} endDate={endDate} />
+        </ScrollView>
     </View>
   );
 };

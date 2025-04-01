@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet,Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import { directions } from '@/assets/LanguageConfig';
 import { useLanguage } from '../../hooks/LanguageContext';
 import { useLocation } from '../../hooks/LocationContext';
@@ -14,6 +14,7 @@ interface MonthProps {
 const Month: React.FC<MonthProps> = ({ startDate, endDate }) => {
     const { direction } = useLanguage();
     const { currentCoordinates } = useLocation();
+    const dateUtils = new DateUtils(startDate, currentCoordinates);
 
     const getDaysInRange = (start: Date, end: Date): Date[] => {
         const days: Date[] = [];
@@ -80,6 +81,11 @@ const Month: React.FC<MonthProps> = ({ startDate, endDate }) => {
 
     return (
         <View style={styles.monthGrid}>
+            <View style={{ alignItems: 'center', marginVertical: 10 }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                    {dateUtils.getMonthTitle()}
+                </Text>
+            </View>
             {renderGrid(days)}
         </View>
     );
