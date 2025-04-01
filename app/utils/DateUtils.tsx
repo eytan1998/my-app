@@ -1,5 +1,5 @@
 import { addDays, format } from 'date-fns';
-import { ComplexZmanimCalendar, GeoLocation, JewishCalendar } from 'kosher-zmanim';
+import { ComplexZmanimCalendar, GeoLocation, HebrewDateFormatter, JewishCalendar } from 'kosher-zmanim';
 import { Coordinates } from '../hooks/LocationContext';
 
 
@@ -43,8 +43,9 @@ class DateUtils {
     }
     }
     getJewishDateDay(): string {
-       const jewishCalendar = new JewishCalendar(this.date);
-        return jewishCalendar.getJewishDayOfMonth().toString();
+        const jewishCalendar = new JewishCalendar(this.date);
+        const hebrewDateFormatter = new HebrewDateFormatter();
+        return hebrewDateFormatter.formatHebrewNumber(jewishCalendar.getJewishDayOfMonth()).toString();
     }
     getGregorianDateDay(): string {
         return this.date.getDate().toString();

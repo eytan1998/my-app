@@ -42,7 +42,7 @@ const Month: React.FC<MonthProps> = ({ startDate, endDate }) => {
             week.push(
                 <View key={day.toISOString()} style={styles.daySlot}>
                     <Day
-                        givenDay={new DateUtils(new Date(),currentCoordinates)}
+                        givenDay={new DateUtils(day,currentCoordinates)}
                         events={
                             <>
                                 {/* Add any icons or elements to represent events here */}
