@@ -13,6 +13,17 @@ class DateUtils {
         this.coordinates = coordinates;
     }
 
+    get currentDate(): Date {
+      return this.date;
+    }
+    isToday(): boolean {
+      const today = new Date();
+      return (
+        this.date.getDate() === today.getDate() &&
+        this.date.getMonth() === today.getMonth() &&
+        this.date.getFullYear() === today.getFullYear()
+      );
+    }
     getZman(zman :zmanim): string {
     // Create a GeoLocation object with the correct timezone
     const geoLocation = new GeoLocation(
@@ -84,7 +95,8 @@ class DateUtils {
       return { startOfDay, endOfDay };
     }
     getMonthTitle(): string {
-      const { startOfDay: startDate, endOfDay: endDate } = this.getJewishStartAndEndMonth();
+      // todo MAKE getGregorianStartAndEndMonth FROM ABOVE AND NOT STATIC
+      const { startOfDay: startDate, endOfDay: endDate } = this.getGregorianStartAndEndMonth();
       const hebrewDateFormatter = new HebrewDateFormatter();
       hebrewDateFormatter.setHebrewFormat(true);
   
@@ -101,7 +113,7 @@ class DateUtils {
   
       // Handle cases where the Jewish months differ
       const jewishMonthTitle =
-          startMonthJewish !== endMonthJewish
+          startMonthJewish != endMonthJewish
               ? `${startMonthJewish} - ${endMonthJewish} ${yearJewish}`
               : `${startMonthJewish} ${yearJewish}`;
   

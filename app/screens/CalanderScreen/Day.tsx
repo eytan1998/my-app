@@ -8,8 +8,11 @@ interface DayProps {
 }
 
 const Day: React.FC<DayProps> = ({ givenDay }) => {
+    // Check if the given day is today
+    const isToday = givenDay.isToday(); // Assuming `isToday` is a method in DateUtils
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, isToday && styles.todayOutline]}>
             {/* Top-left: Image */}
             <View style={styles.topLeft}>
                 <Image source={require('@/assets/images/blue.png')} style={styles.image} />
@@ -60,6 +63,10 @@ const styles = StyleSheet.create({
         position: 'relative',
         width: (Dimensions.get('window').width / 7) - 4, // Divide the screen width by 7 for a week view
     },
+    todayOutline: {
+        borderWidth: 2, // Thicker border for today
+        borderColor: '#007BFF', // Blue outline for today
+    },
     topLeft: {
         position: 'absolute',
         top: 4,
@@ -96,9 +103,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 1, // Add spacing between the lines
     },
     jewishDate: {
-        // fontSize: 14,
-        // fontWeight: 'bold',
-        // color: '#333',
         fontSize: 12,
         color: '#666',
     },
