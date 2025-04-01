@@ -1,5 +1,5 @@
 import { addDays, format } from 'date-fns';
-import { ComplexZmanimCalendar, GeoLocation } from 'kosher-zmanim';
+import { ComplexZmanimCalendar, GeoLocation, JewishCalendar } from 'kosher-zmanim';
 import { Coordinates } from '../hooks/LocationContext';
 
 
@@ -42,7 +42,13 @@ class DateUtils {
         throw new Error('Invalid zman');
     }
     }
-
+    getJewishDateDay(): string {
+       const jewishCalendar = new JewishCalendar(this.date);
+        return jewishCalendar.getJewishDayOfMonth().toString();
+    }
+    getGregorianDateDay(): string {
+        return this.date.getDate().toString();
+    }
     setDate(newDate: Date) {
         this.date = newDate;
     }

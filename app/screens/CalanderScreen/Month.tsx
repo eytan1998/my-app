@@ -1,7 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { directions, languages } from '@/assets/LanguageConfig';
+import { View, StyleSheet,Dimensions } from 'react-native';
+import { directions } from '@/assets/LanguageConfig';
 import { useLanguage } from '../../hooks/LanguageContext';
+import { useLocation } from '../../hooks/LocationContext';
+import Day from './Day';
+import DateUtils from '@/app/utils/DateUtils';
 
 interface MonthProps {
     startDate: Date;
@@ -9,7 +12,8 @@ interface MonthProps {
 }
 
 const Month: React.FC<MonthProps> = ({ startDate, endDate }) => {
-    const {direction} = useLanguage();
+    const { direction } = useLanguage();
+    const { currentCoordinates } = useLocation();
 
     const getDaysInRange = (start: Date, end: Date): Date[] => {
         const days: Date[] = [];
@@ -37,7 +41,14 @@ const Month: React.FC<MonthProps> = ({ startDate, endDate }) => {
 
             week.push(
                 <View key={day.toISOString()} style={styles.daySlot}>
-                    <Text style={styles.dayText}>{day.getDate()}</Text>
+                    <Day
+                        givenDay={new DateUtils(new Date(),currentCoordinates)}
+                        events={
+                            <>
+                                {/* Add any icons or elements to represent events here */}
+                            </>
+                        }
+                    />
                 </View>
             );
 
@@ -50,7 +61,7 @@ const Month: React.FC<MonthProps> = ({ startDate, endDate }) => {
                 }
 
                 // Reverse the week if direction is RTL
-                const renderedWeek = direction === directions.rtl? [...week].reverse() : week;
+                const renderedWeek = direction === directions.rtl ? [...week].reverse() : week;
 
                 // End of the week or last day
                 grid.push(
@@ -69,7 +80,6 @@ const Month: React.FC<MonthProps> = ({ startDate, endDate }) => {
 
     return (
         <View style={styles.monthGrid}>
-     
             {renderGrid(days)}
         </View>
     );
@@ -80,35 +90,21 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 1,
     },
-
-    dayHeader: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    headerText: {
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
     weekRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
     },
     daySlot: {
-        flex: 1,
+        flex: 1, // Ensures each day takes an equal portion of the row
         alignItems: 'center',
         justifyContent: 'center',
-        height: 50,
-        borderColor: '#ccc',
-        backgroundColor: '#f9f9f9',
-        margin: 2,
-    },
-    dayText: {
-        fontSize: 14,
+        height : 120,
+        
+        margin: 1, // Small margin for spacing
     },
     emptySlot: {
-        flex: 1,
-        height: 50,
-        margin: 2,
+        flex: 1, // Ensures empty slots take the same space as day slots
+        height : 120,
+        margin: 1,
     },
 });
 

@@ -25,7 +25,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <Text style={{ textAlign: direction == directions.rtl ? 'right' : 'left' }}>
       {/* {currentCoordinates.latitude} {currentCoordinates.longitude} {currentCoordinates.altitude} */}
-       {translations.sunrise}: {dateUtils.getZman(zmanim.Sunrise)}
+       {+translations.sunrise}: {dateUtils.getZman(zmanim.Sunrise)}
       {"\n"+translations.sunset}: {dateUtils.getZman(zmanim.Sunset)}
         {"\n"+translations.plag_mincha}: {dateUtils.getZman(zmanim.PlagMincha)}
         {"\n"+translations.tzet_kochavim}: {dateUtils.getZman(zmanim.TzetKochavim)}
