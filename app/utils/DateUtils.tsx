@@ -24,6 +24,13 @@ class DateUtils {
         this.date.getFullYear() === today.getFullYear()
       );
     }
+    isEqual(date: DateUtils): boolean {
+      return (
+        this.date.getDate() === date.currentDate.getDate() &&
+        this.date.getMonth() === date.currentDate.getMonth() &&
+        this.date.getFullYear() === date.currentDate.getFullYear()
+      );
+    }
     getZman(zman :zmanim): string {
     // Create a GeoLocation object with the correct timezone
     const geoLocation = new GeoLocation(
@@ -68,7 +75,25 @@ class DateUtils {
     setCoordinates(newCoordinates: Coordinates) {
         this.coordinates = newCoordinates;
     }
+    getParash(): string | null {
+      const jewishCalendar = new JewishCalendar(this.date);
+      const hebrewDateFormatter = new HebrewDateFormatter();
+      hebrewDateFormatter.setHebrewFormat(true);
+      return jewishCalendar.getParsha() ? hebrewDateFormatter.formatParsha(jewishCalendar) : null;
+    }
+    getYomTov(): string | null {
+      const jewishCalendar = new JewishCalendar(this.date);
+      const hebrewDateFormatter = new HebrewDateFormatter();
+      hebrewDateFormatter.setHebrewFormat(true);
+      return jewishCalendar.isYomTov() ? hebrewDateFormatter.formatYomTov(jewishCalendar) : null;
+    }
+    getOmerCounting(): string | null {
+      const jewishCalendar = new JewishCalendar(this.date);
+      const hebrewDateFormatter = new HebrewDateFormatter();
+      hebrewDateFormatter.setHebrewFormat(true);
+      return hebrewDateFormatter.formatOmer(jewishCalendar);
 
+    }
     getGregorianStartAndEndMonth(): { startOfDay: Date; endOfDay: Date } {
       const startOfDay = new Date(this.date);
       startOfDay.setHours(0, 0, 0, 0);
