@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, Modal, View, ScrollView ,Text, Button} from 'react-native';
 import Month from '@/app/screens/CalanderScreen/Month';
 import DateUtils from '@/app/utils/DateUtils';
 import { useLocation } from '@/app/hooks/LocationContext';
 
-const HomeScreen = () => {
+const CalendarScreen: React.FC = () => {
+  const [selectedDay, setSelectedDay] = useState<DateUtils | null>(null);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const handleDayPress = (day: DateUtils) => {
+      setSelectedDay(day); // Set the clicked day
+      setModalVisible(true); // Show the modal
+  };
+
+  const closeModal = () => {
+      setModalVisible(false);
+      setSelectedDay(null); // Clear the selected day
+  };
+
   const { currentCoordinates } = useLocation();
 
   // Initialize with two months: current and previous
@@ -40,44 +53,84 @@ const HomeScreen = () => {
   };
 
   return (
+    
     <View style={styles.container}>
+      
       <ScrollView
-        onScroll={({ nativeEvent }) => {
-          const { contentOffset, contentSize, layoutMeasurement } = nativeEvent;
-          const isScrolledToTop = contentOffset.y <= 0;
-          const isScrolledToBottom =
-            contentOffset.y + layoutMeasurement.height >= contentSize.height;
+      onScroll={({ nativeEvent }) => {
+        const { contentOffset, contentSize, layoutMeasurement } = nativeEvent;
+        const isScrolledToTop = contentOffset.y <= 0;
+        const isScrolledToBottom =
+        contentOffset.y + layoutMeasurement.height >= contentSize.height;
 
-          if (isScrolledToTop) {
-            console.log('Scrolled to top, adding month to top');
-            addMonthToTop();
-          }
+        if (isScrolledToTop) {
+        console.log('Scrolled to top, adding month to top');
+        addMonthToTop();
+        }
 
-          if (isScrolledToBottom) {
-            console.log('Scrolled to bottom, adding month to bottom');
-            addMonthToBottom();
-          }
-        }}
-        scrollEventThrottle={16}
+        if (isScrolledToBottom) {
+        console.log('Scrolled to bottom, adding month to bottom');
+        addMonthToBottom();
+        }
+      }}
+      scrollEventThrottle={16}
       >
-        {months.map((month, index) => (
-          <Month
-            key={index}
-            startDate={month.getJewishStartAndEndMonth().startOfMonth}
-            endDate={month.getJewishStartAndEndMonth().endOfMonth}
-          />
-        ))}
+      {months.map((month, index) => (
+        <Month
+        key={index}
+        startDate={month.getJewishStartAndEndMonth().startOfMonth}
+        endDate={month.getJewishStartAndEndMonth().endOfMonth}
+        onDayPress={handleDayPress}
+        />
+      ))}
       </ScrollView>
+
+      <Modal visible={isModalVisible} transparent={true} animationType="slide">
+      <View style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+        {selectedDay && (
+          <>
+          <Text style={styles.modalTitle}>Day Details</Text>
+          <Text>Jewish Date: {selectedDay.getJewishDateDay()}</Text>
+          <Text>Gregorian Date: {selectedDay.getGregorianDateDay()}</Text>
+          <Text>Parasha: {selectedDay.getParash()}</Text>
+          <Text>Yom Tov: {selectedDay.getYomTov()}</Text>
+          <Text>Omer Counting: {selectedDay.getOmerCounting()}</Text>
+          {/* Add options to edit events, add messages, etc. */}
+          <Button title="Edit Events" onPress={() => console.log('Edit events')} />
+          </>
+        )}
+        <Button title="Close" onPress={closeModal} />
+        </View>
+      </View>
+      </Modal>
+      
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 5,
-    backgroundColor: '#fff',
+      flex: 1,
+  },
+  modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+      width: '80%',
+      padding: 20,
+      backgroundColor: 'white',
+      borderRadius: 10,
+  },
+  modalTitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 10,
   },
 });
 
-export default HomeScreen;
+
+export default CalendarScreen;

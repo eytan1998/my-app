@@ -1,7 +1,7 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import HomeScreen from '@/app/screens/CalanderScreen/CalanderScreen';
+import CalendarScreen from '@/app/screens/CalanderScreen/CalanderScreen';
 import LocationSettingScreeen from '@/app/screens/LocationScreen/LocationSettingsScreen';
 import SettingsScreen from '@/app/screens/SettingsScreen';
 import HelpScreen from '@/app/screens/HelpScreen';
@@ -26,8 +26,8 @@ export default function DrawerLayout() {
     >
 
             <Drawer.Screen
-            name="Home"
-            component={HomeScreen}
+            name="CalendarScreen"
+            component={CalendarScreen}
             options={{ 
               title: translations.home || 'Home',
             }}
@@ -76,7 +76,7 @@ function CustomDrawerContent(props: any) {
       </View>
 
       <View style={{ paddingHorizontal: 20, alignItems: direction === directions.rtl ? 'flex-end' : 'flex-start' }}>
-      <TouchableOpacity style={styles.drawerItem} onPress={() => props.navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.drawerItem} onPress={() => props.navigation.navigate('CalendarScreen')}>
         <Text>{translations.home}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.drawerItem} onPress={() => props.navigation.navigate('Profile')}>

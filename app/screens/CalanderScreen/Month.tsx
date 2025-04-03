@@ -9,9 +9,10 @@ import DateUtils from '@/app/utils/DateUtils';
 interface MonthProps {
     startDate: Date;
     endDate: Date;
+    onDayPress : (day: DateUtils) => void;
 }
 
-const Month: React.FC<MonthProps> = ({ startDate, endDate }) => {
+const Month: React.FC<MonthProps> = ({ startDate, endDate, onDayPress }) => {
     const { direction } = useLanguage();
     const { currentCoordinates } = useLocation();
     const dateUtils = new DateUtils(startDate, currentCoordinates);
@@ -49,6 +50,7 @@ const Month: React.FC<MonthProps> = ({ startDate, endDate }) => {
                                 {/* Add any icons or elements to represent events here */}
                             </>
                         }
+                        onDayPress={onDayPress}
                     />
                 </View>
             );

@@ -4,20 +4,19 @@ import { View, Text, StyleSheet, Dimensions, Image,TouchableWithoutFeedback } fr
 
 interface DayProps {
     givenDay: DateUtils;
-    selectedDay: DateUtils | null; 
-    onDaySelect: (day: DateUtils) => void; // Callback to update the selected day
     events?: React.ReactNode; // Icons or elements to represent events
+    onDayPress: (day: DateUtils) => void;
 }
 
-const Day: React.FC<DayProps> = ({ givenDay,selectedDay,onDaySelect }) => {
+const Day: React.FC<DayProps> = ({ givenDay, onDayPress }) => {
     // Check if the given day is today
     const isToday = givenDay.isToday(); // Assuming `isToday` is a method in DateUtils
-    const [dynamicStyle, setDynamicStyle] = React.useState({});
-    const isSelected = selectedDay && selectedDay.isEqual(givenDay); 
-
+    const handlePress = () => {
+        onDayPress(givenDay); // Notify the parent when the day is clicked
+    };
     return (
-        <TouchableWithoutFeedback onPress={() => onDaySelect(givenDay)}>
-            <View style={[styles.container, isSelected && styles.selectedOutline]}>
+        <TouchableWithoutFeedback onPress={handlePress}>
+            <View style={[styles.container]}>
                 {/* Top-left: Image */}
                 <View style={styles.topLeft}>
                     <Image source={require('@/assets/images/blue.png')} style={styles.image} />

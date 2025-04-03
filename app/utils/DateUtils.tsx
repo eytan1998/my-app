@@ -25,6 +25,7 @@ class DateUtils {
     get currentDate(): Date {
         return this.date;
     }
+    
 
     /**
      * Checks if the current date is today.
@@ -47,6 +48,17 @@ class DateUtils {
             this.date.getDate() === date.currentDate.getDate() &&
             this.date.getMonth() === date.currentDate.getMonth() &&
             this.date.getFullYear() === date.currentDate.getFullYear()
+        );
+    }
+    /**
+     * Compares the current date with another DateUtils instance.
+     * @param date - Another DateUtils instance to compare with.
+     */
+    isDateEqual(date: Date): boolean {
+        return (
+            this.date.getDate() === date.getDate() &&
+            this.date.getMonth() === date.getMonth() &&
+            this.date.getFullYear() === date.getFullYear()
         );
     }
 
