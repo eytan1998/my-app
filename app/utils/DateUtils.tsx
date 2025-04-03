@@ -157,21 +157,21 @@ class DateUtils {
     /**
      * Gets the start and end of the current Jewish month.
      */
-    getJewishStartAndEndMonth(): { startOfDay: Date; endOfDay: Date } {
+    getJewishStartAndEndMonth(): { startOfMonth: Date; endOfMonth: Date } {
         const jewishCalendar = new JewishCalendar(this.date);
-        const startOfMonth = new JewishCalendar(this.date);
-        startOfMonth.setJewishDayOfMonth(1);
+        const startOfMonthJew = new JewishCalendar(this.date);
+        startOfMonthJew.setJewishDayOfMonth(1);
 
-        const endOfMonth = new JewishCalendar(this.date);
-        endOfMonth.setJewishDayOfMonth(jewishCalendar.getDaysInJewishMonth());
+        const endOfMonthJew = new JewishCalendar(this.date);
+        endOfMonthJew.setJewishDayOfMonth(jewishCalendar.getDaysInJewishMonth());
 
-        const startOfDay = new Date(startOfMonth.getDate());
-        startOfDay.setHours(0, 0, 0, 0);
+        const startOfMonth = new Date(startOfMonthJew.getDate());
+        startOfMonth.setHours(0, 0, 0, 0);
 
-        const endOfDay = new Date(endOfMonth.getDate());
-        endOfDay.setHours(23, 59, 59, 999);
+        const endOfMonth = new Date(endOfMonthJew.getDate());
+        endOfMonth.setHours(23, 59, 59, 999);
 
-        return { startOfDay, endOfDay };
+        return { startOfMonth, endOfMonth };
     }
 
     /**
@@ -179,7 +179,7 @@ class DateUtils {
      */
     getMonthTitle(): string {
         // todo MAKE getGregorianStartAndEndMonth FROM ABOVE AND NOT STATIC
-        const { startOfMonth: startDate, endOfMonth: endDate } = this.getGregorianStartAndEndMonth();
+        const { startOfMonth: startDate, endOfMonth: endDate } = this.getJewishStartAndEndMonth();
         const hebrewDateFormatter = new HebrewDateFormatter();
         hebrewDateFormatter.setHebrewFormat(true);
 
