@@ -221,6 +221,29 @@ class DateUtils {
         // Combine both Jewish and Gregorian month titles
         return `${jewishMonthTitle} | ${gregorianMonthTitle}`;
     }
+
+    /**
+     * Converts the current date to a formatted Gregorian date string.
+     * @returns A string representing the Gregorian date.
+     */
+    toGregorianString(): string {
+        return this.date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+    }
+
+    /**
+     * Converts the current date to a formatted Jewish date string.
+     * @returns A string representing the Jewish date.
+     */
+    toJewishString(): string {
+        const jewishCalendar = new JewishCalendar(this.date);
+        const hebrewDateFormatter = new HebrewDateFormatter();
+        hebrewDateFormatter.setHebrewFormat(true);
+        return `${hebrewDateFormatter.format(jewishCalendar)}`;
+        }
 }
 
 /**

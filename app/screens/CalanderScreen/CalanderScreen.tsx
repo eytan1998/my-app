@@ -91,8 +91,8 @@ const CalendarScreen: React.FC = () => {
         {selectedDay && (
           <>
           <Text style={styles.modalTitle}>Day Details</Text>
-          <Text>Jewish Date: {selectedDay.getJewishDateDay()}</Text>
-          <Text>Gregorian Date: {selectedDay.getGregorianDateDay()}</Text>
+          <Text>Jewish Date: {selectedDay.toJewishString()}</Text>
+          <Text>Gregorian Date: {selectedDay.toGregorianString()}</Text>
           <Text>Parasha: {selectedDay.getParash()}</Text>
           <Text>Yom Tov: {selectedDay.getYomTov()}</Text>
           <Text>Omer Counting: {selectedDay.getOmerCounting()}</Text>
