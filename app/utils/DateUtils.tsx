@@ -179,7 +179,7 @@ class DateUtils {
      */
     getMonthTitle(): string {
         // todo MAKE getGregorianStartAndEndMonth FROM ABOVE AND NOT STATIC
-        const { startOfDay: startDate, endOfDay: endDate } = this.getGregorianStartAndEndMonth();
+        const { startOfMonth: startDate, endOfMonth: endDate } = this.getGregorianStartAndEndMonth();
         const hebrewDateFormatter = new HebrewDateFormatter();
         hebrewDateFormatter.setHebrewFormat(true);
 

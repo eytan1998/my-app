@@ -63,8 +63,8 @@ const HomeScreen = () => {
         {months.map((month, index) => (
           <Month
             key={index}
-            startDate={month.getGregorianStartAndEndMonth().startOfDay}
-            endDate={month.getGregorianStartAndEndMonth().endOfDay}
+            startDate={month.getGregorianStartAndEndMonth().startOfMonth}
+            endDate={month.getGregorianStartAndEndMonth().endOfMonth}
           />
         ))}
       </ScrollView>
