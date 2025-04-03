@@ -1,4 +1,4 @@
-import { EventType } from './Events/Events'; // Import EventType enum
+import { EventType } from '../Models/Events/Events'; // Import EventType enum
 
 //prisha is global,and not daily
 // Class for a calendar day

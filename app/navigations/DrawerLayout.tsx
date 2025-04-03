@@ -7,6 +7,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import HelpScreen from '../screens/HelpScreen';
 import { useTheme } from '../hooks/ThemeContext';
 import { useLanguage } from '../hooks/LanguageContext';
+import { useAuth } from '../hooks/AuthContext';
 import { directions, languages } from '@/assets/LanguageConfig';
 
 
@@ -60,6 +61,12 @@ export default function DrawerLayout() {
 function CustomDrawerContent(props: any) {
   const { theme } = useTheme();
   const { translations ,direction} = useLanguage();
+  const { logout } = useAuth(); // Assuming you have a logout function in your auth context
+
+  const handleLogout = () => {
+    logout();
+    props.navigation.replace('Login'); // Navigate to the login screen after logout
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -81,6 +88,9 @@ function CustomDrawerContent(props: any) {
       <TouchableOpacity style={styles.drawerItem} onPress={() => props.navigation.navigate('Help')}>
         <Text>{translations.help}</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.drawerItem} onPress={handleLogout}>
+          <Text style={{ color: 'red' }}>{translations.Logout || 'Logout'}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

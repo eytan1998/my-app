@@ -1,6 +1,6 @@
 import { languages } from "./LanguageConfig";
-import { Prisha } from "./Prisha";
-import { EventType } from "./Events/Events";
+import { Prisha } from "./Models/Prisha";
+import { EventType } from "./Models/Events/Events";
 
 export const Translations = {
   [languages.en]: {
@@ -12,6 +12,35 @@ export const Translations = {
     help: "Help",
     welcome: "Welcome to the app!",
     hebrewDate: "Hebrew Date",
+    Signup: "Sign Up",
+    Login: "Login",
+    Logout: "Logout",
+    Email: "Email",
+    Password: "Password",
+    ConfirmPassword: "Confirm Password",
+    DontHaveAccount: "Don't have an account?  ",
+    CreateAccount: "Create an account",
+    AlreadyHaveAccount: "Already have an account? ",
+    Error: "Error",
+    Success: "Success",
+    PasswordsDoNotMatch: "Passwords do not match",
+    AllFieldsRequired: "All fields are required",
+    AccountCreated: "Account created successfully. A verification email has been sent to your email address.",
+    EmailAlreadyInUse: "The email address is already in use.",
+    VerifyEmail: "Please verify your email before logging in.",
+    InvalidEmail: "The email address is invalid.",
+    WeakPassword: "The password is too weak. It must be at least 6 characters long.",
+    UnknownError: "An unknown error occurred.",
+    LoginFailed: "Login failed.",
+    UserNotFound: "User not found.",
+    WrongPassword: "Wrong password.",
+    UserDisabled: "The user has been disabled.",
+    TooManyRequests: "Too many requests. Please try again later.",
+    RequiresRecentLogin: "Recent login required.",
+    NetworkRequestFailed: "Network request failed.",
+    InvalidUserToken: "Invalid user token.",
+    AppNotAuthorized: "The app is not authorized.",
+    OperationNotAllowed: "The operation is not allowed.",
 
     //zmanim
     sunrise: "Sunrise",
@@ -61,6 +90,36 @@ export const Translations = {
     help: "עזרה",
     welcome: "ברוכים הבאים לאפליקציה!",
     hebrewDate: "תאריך עברי",
+    Signup: "הרשמה",
+    Login: "כניסה",
+    Logout: "יציאה",
+    Email: "אימייל",
+    Password: "סיסמה",
+    ConfirmPassword: "אשר סיסמה",
+    CreateAccount: "צור חשבון",
+    DontHaveAccount: "אין לך חשבון? ",
+    AlreadyHaveAccount: "כבר יש לך חשבון? ",
+    Error: "שגיאה",
+    Success: "הצלחה",
+    PasswordsDoNotMatch: "הסיסמאות אינן תואמות",
+    AllFieldsRequired: "כל השדות נדרשים",
+    AccountCreated: "החשבון נוצר בהצלחה. אימייל לאימות נשלח לכתובת האימייל שלך.",
+    EmailAlreadyInUse: "כתובת האימייל כבר בשימוש.",
+    VerifyEmail: "אנא אמת את כתובת האימייל שלך לפני הכניסה.",
+    InvalidEmail: "כתובת האימייל אינה חוקית.",
+    WeakPassword: "הסיסמה חלשה מדי. עליה להיות באורך של לפחות 6 תווים.",
+    UnknownError: "אירעה שגיאה לא ידועה.",
+    LoginFailed: "הכניסה נכשלה.",
+    UserNotFound: "המשתמש לא נמצא.",
+    WrongPassword: "סיסמה שגויה.",
+    UserDisabled: "המשתמש הושבת.",
+    TooManyRequests: "יותר מדי בקשות. נסה שוב מאוחר יותר.",
+    RequiresRecentLogin: "נדרשת כניסה מחדש.",
+    NetworkRequestFailed: "בקשת הרשת נכשלה.",
+    InvalidUserToken: "אסימון המשתמש אינו חוקי.",
+    AppNotAuthorized: "האפליקציה אינה מורשית.",
+    OperationNotAllowed: "הפעולה אינה מותרת.",
+
 
     //zmain
     sunrise: "זריחה",

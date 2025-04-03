@@ -54,16 +54,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     // Save the selected language
     await AsyncStorage.setItem('appLanguage', lang);
 
-    // // Optional: Reload the app to apply changes
-    // if (I18nManager.isRTL !== isRTL) {
-    //   setTimeout(() => {
-    //     if (typeof Updates !== 'undefined' && Updates.reloadAsync) {
-    //       Updates.reloadAsync();
-    //     } else {
-    //       console.warn('App reload required for direction change.');
-    //     }
-    //   }, 500);
-    // }
   };
 
   return (
