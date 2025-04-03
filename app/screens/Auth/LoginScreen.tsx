@@ -33,7 +33,7 @@ export default function LoginScreen() {
       }
       navigation.replace('Drawer');
 
-      
+
     } catch (error: any) {
       let errorMessage = translations.LoginFailed; // Default error message
       console.error(error);
@@ -101,6 +101,10 @@ export default function LoginScreen() {
           onChangeText={setPassword}
         />
       </View>
+      {/* Forgot Password */}
+      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+        <Text style={styles.forgotPasswordText}>{translations.ForgotPassword}</Text>
+      </TouchableOpacity>
 
       {/* Login Button */}
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
@@ -149,6 +153,12 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     color: 'white',
+  },
+  forgotPasswordText: {
+    color: '#FFD700',
+    marginBottom: 15,
+    textAlign: 'right',
+    width: '100%',
   },
   loginButton: {
     backgroundColor: '#FF6B6B',

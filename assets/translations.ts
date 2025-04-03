@@ -14,6 +14,9 @@ export const Translations = {
     hebrewDate: "Hebrew Date",
     Signup: "Sign Up",
     Login: "Login",
+    ForgotPassword: "Forgot Password?",
+    ResetPassword: "Reset Password",
+    PasswordResetInstruction: "Enter your email address to receive a password reset link.",
     Logout: "Logout",
     Email: "Email",
     Password: "Password",
@@ -41,6 +44,7 @@ export const Translations = {
     InvalidUserToken: "Invalid user token.",
     AppNotAuthorized: "The app is not authorized.",
     OperationNotAllowed: "The operation is not allowed.",
+    PasswordResetEmailSent: "Password reset email sent. Please check your inbox.",
 
     //zmanim
     sunrise: "Sunrise",
@@ -92,7 +96,9 @@ export const Translations = {
     hebrewDate: "תאריך עברי",
     Signup: "הרשמה",
     Login: "כניסה",
-    Logout: "יציאה",
+    ForgotPassword: "שכחת סיסמה?",
+    PasswordResetInstruction: "הזן את כתובת האימייל שלך כדי לקבל קישור לאיפוס סיסמה.",    Logout: "יציאה",
+    ResetPassword: "איפוס סיסמה",
     Email: "אימייל",
     Password: "סיסמה",
     ConfirmPassword: "אשר סיסמה",
@@ -119,7 +125,7 @@ export const Translations = {
     InvalidUserToken: "אסימון המשתמש אינו חוקי.",
     AppNotAuthorized: "האפליקציה אינה מורשית.",
     OperationNotAllowed: "הפעולה אינה מותרת.",
-
+    PasswordResetEmailSent: "אימייל לאיפוס סיסמה נשלח. אנא בדוק את תיבת הדואר הנכנס שלך.",
 
     //zmain
     sunrise: "זריחה",

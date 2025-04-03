@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, UserCredential, sendEmailVerification } from 'firebase/auth';
+import { sendPasswordResetEmail, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, UserCredential, sendEmailVerification } from 'firebase/auth';
 import { auth } from '../../assets/firebase/firebaseConfig';
 
 interface AuthContextType {
@@ -7,7 +7,8 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<UserCredential>;
   signup: (email: string, password: string) => Promise<UserCredential>;
   logout: () => Promise<void>;
-  isAuthenticated: boolean; // Track if user is authenticated
+  resetPassword: (email: string) => Promise<void>;
+  isAuthenticated: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,9 +24,8 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-
-  // Track if user is authenticated
   const isAuthenticated = !!currentUser;
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -34,6 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     return unsubscribe;
   }, []);
+
 
   const signup = async (email: string, password: string) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -57,8 +58,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await signOut(auth)
   };
 
+  const resetPassword = async (email: string) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+        throw error;
+    }
+  };
+
+
   return (
-    <AuthContext.Provider value={{ currentUser, login, signup, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ currentUser, login, signup, logout,resetPassword, isAuthenticated }}>
       {!loading && children}
     </AuthContext.Provider>
   );
