@@ -3,12 +3,10 @@ import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } fro
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AuthStackParamList } from '../../_layout';
+import { AuthStackParamList } from '../../navigations/AppNavigator';
 import { FontAwesome } from '@expo/vector-icons';
 import { useLanguage } from '@/app/hooks/LanguageContext';
 import { useAuth } from '@/app/hooks/AuthContext';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../assets/firebase/firebaseConfig';
 
 // Type-safe navigation
 type AuthNavigationProp = NativeStackNavigationProp<AuthStackParamList, 'Signup'>;
@@ -35,7 +33,7 @@ export default function SignupScreen() {
       Alert.alert(translations.Success, translations.AccountCreated);
       navigation.navigate('Login')
 
-      
+
     } catch (error: any) {
       let errorMessage = translations.UnknownError; // Default error message
       console.error(error);

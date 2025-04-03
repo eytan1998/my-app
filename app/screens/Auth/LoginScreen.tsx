@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } fro
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AuthStackParamList } from '../../_layout';
+import { AuthStackParamList } from '../../navigations/AppNavigator';
 import { FontAwesome } from '@expo/vector-icons';
 import { useLanguage } from '@/app/hooks/LanguageContext';
 import { useAuth } from '@/app/hooks/AuthContext';
