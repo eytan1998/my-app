@@ -3,6 +3,7 @@ import { AuthProvider } from '@/app/hooks/AuthContext';
 import { LanguageProvider } from '@/app/hooks/LanguageContext';
 import { LocationProvider } from '@/app/hooks/LocationContext';
 import AppNavigator from '@/app/navigations/AppNavigator';
+import DrawerLayout from '@/app/navigations/DrawerLayout';
 
 export default function Layout() {
   // Android-specific layout
@@ -10,7 +11,7 @@ export default function Layout() {
     <AuthProvider>
     <LanguageProvider>
       <LocationProvider>
-        <AppNavigator />
+        <DrawerLayout />
       </LocationProvider>
     </LanguageProvider>
   </AuthProvider>
