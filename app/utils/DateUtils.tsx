@@ -145,18 +145,13 @@ class DateUtils {
         hebrewDateFormatter.setHebrewFormat(true);
         return hebrewDateFormatter.formatOmer(jewishCalendar);
     }
-
     /**
      * Gets the start and end of the current Gregorian month.
      */
-    getGregorianStartAndEndMonth(): { startOfDay: Date; endOfDay: Date } {
-        const startOfDay = new Date(this.date);
-        startOfDay.setHours(0, 0, 0, 0);
-
-        const endOfDay = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0);
-        endOfDay.setHours(23, 59, 59, 999);
-
-        return { startOfDay, endOfDay };
+    getGregorianStartAndEndMonth(): { startOfMonth: Date; endOfMonth: Date } {
+      const startOfMonth = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
+      const endOfMonth = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0);
+      return { startOfMonth, endOfMonth };
     }
 
     /**
