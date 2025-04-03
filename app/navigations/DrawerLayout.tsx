@@ -89,7 +89,7 @@ function CustomDrawerContent(props: any) {
         <Text>{translations.help}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.drawerItem} onPress={handleLogout}>
-          <Text style={{ color: 'red' }}>{translations.Logout || 'Logout'}</Text>
+          <Text style={{ color: 'red' }}>{translations.Logout}</Text>
         </TouchableOpacity>
       </View>
     </View>
