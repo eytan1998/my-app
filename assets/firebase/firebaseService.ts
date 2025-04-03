@@ -1,6 +1,6 @@
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from './firebaseConfig';
-import { UserData } from '../Models/UserData';
+import { db } from '@/assets/firebase/firebaseConfig';
+import { UserData } from '@/assets/Models/UserData';
 
 const USERS_COLLECTION = 'users';
 

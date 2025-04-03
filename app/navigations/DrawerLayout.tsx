@@ -1,13 +1,13 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import HomeScreen from '../screens/CalanderScreen/CalanderScreen';
-import LocationSettingScreeen from '../screens/LocationScreen/LocationSettingsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import HelpScreen from '../screens/HelpScreen';
-import { useTheme } from '../hooks/ThemeContext';
-import { useLanguage } from '../hooks/LanguageContext';
-import { useAuth } from '../hooks/AuthContext';
+import HomeScreen from '@/app/screens/CalanderScreen/CalanderScreen';
+import LocationSettingScreeen from '@/app/screens/LocationScreen/LocationSettingsScreen';
+import SettingsScreen from '@/app/screens/SettingsScreen';
+import HelpScreen from '@/app/screens/HelpScreen';
+import { useTheme } from '@/app/hooks/ThemeContext';
+import { useLanguage } from '@/app/hooks/LanguageContext';
+import { useAuth } from '@/app/hooks/AuthContext';
 import { directions, languages } from '@/assets/LanguageConfig';
 
 

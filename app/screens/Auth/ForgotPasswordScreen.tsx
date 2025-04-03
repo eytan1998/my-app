@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../hooks/AuthContext';
-import { useLanguage } from '../../hooks/LanguageContext';
+import { useAuth } from '@/app/hooks/AuthContext';
+import { useLanguage } from '@/app/hooks/LanguageContext';
 import { TextInput, Button, Text, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 
 const ForgotPasswordScreen: React.FC = () => {

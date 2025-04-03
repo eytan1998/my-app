@@ -1,6 +1,6 @@
-import { languages } from "./LanguageConfig";
-import { Prisha } from "./Models/Prisha";
-import { EventType } from "./Models/Events/Events";
+import { languages } from "@/assets/LanguageConfig";
+import { Prisha } from "@/assets/Models/Prisha";
+import { EventType } from "@/assets/Models/Events/Events";
 
 export const Translations = {
   [languages.en]: {

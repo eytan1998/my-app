@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useLanguage } from '../../hooks/LanguageContext';
+import { useLanguage } from '@/app/hooks/LanguageContext';
 import { directions } from '@/assets/LanguageConfig';
 
 

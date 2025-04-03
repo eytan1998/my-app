@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { sendPasswordResetEmail, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, UserCredential, sendEmailVerification } from 'firebase/auth';
-import { auth } from '../../assets/firebase/firebaseConfig';
+import { auth } from '@/assets/firebase/firebaseConfig';
 
 interface AuthContextType {
   currentUser: any;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 
-import { LocationProvider, useLocation} from '../../hooks/LocationContext';
+import {useLocation} from '@/app/hooks/LocationContext';
 
 const LocationSettingsScreen: React.FC = () => {
   const [savedLocations, setSavedLocations] = useState<string[]>([]);

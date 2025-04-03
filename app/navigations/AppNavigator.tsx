@@ -1,8 +1,8 @@
 import React from 'react';
-import LoginScreen from '../screens/Auth/LoginScreen';
-import SignupScreen from '../screens/Auth/SignUpScreen';
-import ForgotPasswordScreen from '../screens/Auth/ForgotPasswordScreen';
-import DrawerLayout from './DrawerLayout';
+import LoginScreen from '@/app/screens/Auth/LoginScreen';
+import SignupScreen from '@/app/screens/Auth/SignUpScreen';
+import ForgotPasswordScreen from '@/app/screens/Auth/ForgotPasswordScreen';
+import DrawerLayout from '@/app/navigations/DrawerLayout';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 

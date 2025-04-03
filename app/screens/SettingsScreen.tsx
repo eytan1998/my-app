@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Button,Text } from 'react-native';
-import { useTheme } from '../hooks/ThemeContext';  // Import the custom hook
-import { useLanguage } from '../hooks/LanguageContext';
-import { directions, languages } from '../../assets/LanguageConfig';
+import { useTheme } from '@/app/hooks/ThemeContext';  // Import the custom hook
+import { useLanguage } from '@/app/hooks/LanguageContext';
+import { directions, languages } from '@/assets/LanguageConfig';
 
 
 export default function SettingsScreen() {

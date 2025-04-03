@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import { directions } from '@/assets/LanguageConfig';
-import { useLanguage } from '../../hooks/LanguageContext';
-import { useLocation } from '../../hooks/LocationContext';
-import Day from './Day';
+import { useLanguage } from '@/app/hooks/LanguageContext';
+import { useLocation } from '@/app/hooks/LocationContext';
+import Day from '@/app/screens/CalanderScreen/Day';
 import DateUtils from '@/app/utils/DateUtils';
 
 interface MonthProps {
