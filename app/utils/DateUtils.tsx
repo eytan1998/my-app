@@ -207,7 +207,7 @@ class DateUtils {
                 : `${startMonthGreg} ${yearGreg}`;
 
         // Combine both Jewish and Gregorian month titles
-        return `${jewishMonthTitle} / ${gregorianMonthTitle}`;
+        return `${jewishMonthTitle} | ${gregorianMonthTitle}`;
     }
 }
 
