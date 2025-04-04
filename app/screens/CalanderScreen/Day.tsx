@@ -1,6 +1,7 @@
 import DateUtils from '@/app/utils/DateUtils';
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image,TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
+import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
 
 interface DayProps {
     givenDay: DateUtils;
@@ -9,6 +10,8 @@ interface DayProps {
 }
 
 const Day: React.FC<DayProps> = ({ givenDay, onDayPress }) => {
+    const { showOmer,showYomTov, showParash, } = useCalendarSettings();
+
     // Check if the given day is today
     const isToday = givenDay.isToday(); // Assuming `isToday` is a method in DateUtils
     const handlePress = () => {
@@ -41,9 +44,15 @@ const Day: React.FC<DayProps> = ({ givenDay, onDayPress }) => {
 
                 {/* Center: Icons and Text */}
                 <View style={styles.centerContent}>
-                    <Text style={styles.eventText}>{givenDay.getParash()}</Text>
-                    <Text style={styles.eventText}>{givenDay.getYomTov()}</Text>
-                    <Text style={styles.eventText}>{givenDay.getOmerCounting()}</Text>
+                    {showParash && (
+                        <Text style={styles.eventText}>{givenDay.getParash()}</Text>
+                    )}
+                    {showYomTov && (
+                        <Text style={styles.eventText}>{givenDay.getYomTov()}</Text>
+                    )}
+                    {showOmer && (
+                        <Text style={styles.eventText}>{givenDay.getOmerCounting()}</Text>
+                    )}
                     {/* Three red lines with 1:2:1 ratio */}
                     <View style={styles.redLinesContainer}>
                         <View style={[styles.redLine, { flex: 1 }]} />

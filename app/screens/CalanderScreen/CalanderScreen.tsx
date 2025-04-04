@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Modal, View, ScrollView ,Text, Button} from 'react-native';
 import Month from '@/app/screens/CalanderScreen/Month';
 import DateUtils from '@/app/utils/DateUtils';
+import { useLanguage } from '@/app/hooks/LanguageContext';
 import { useLocation } from '@/app/hooks/LocationContext';
 import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
 
@@ -21,15 +22,16 @@ const CalendarScreen: React.FC = () => {
 
   const { currentCoordinates } = useLocation();
   const { calendarType} = useCalendarSettings();
+  const { isHebrew} = useLanguage();
 
   // Initialize with two months: current and previous
   const [months, setMonths] = useState(() => {
     const currentDate = new Date();
-    const currentMonth = new DateUtils(currentDate, currentCoordinates);
+    const currentMonth = new DateUtils(currentDate, currentCoordinates, isHebrew() ,calendarType);
 
     const previousMonthDate = new Date(currentDate);
     previousMonthDate.setMonth(previousMonthDate.getMonth() - 1);
-    const previousMonth = new DateUtils(previousMonthDate, currentCoordinates);
+    const previousMonth = new DateUtils(previousMonthDate, currentCoordinates, isHebrew() ,calendarType);
 
     return [previousMonth, currentMonth];
   });
@@ -39,7 +41,7 @@ const CalendarScreen: React.FC = () => {
       const firstMonth = prevMonths[0];
       const previousMonthDate = new Date(firstMonth.currentDate);
       previousMonthDate.setMonth(previousMonthDate.getMonth() - 1);
-      const newMonth = new DateUtils(previousMonthDate, currentCoordinates);
+      const newMonth = new DateUtils(previousMonthDate, currentCoordinates, isHebrew() ,calendarType);
       return [newMonth, ...prevMonths];
     });
   };
@@ -49,7 +51,7 @@ const CalendarScreen: React.FC = () => {
       const lastMonth = prevMonths[prevMonths.length - 1];
       const nextMonthDate = new Date(lastMonth.currentDate);
       nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
-      const newMonth = new DateUtils(nextMonthDate, currentCoordinates);
+      const newMonth = new DateUtils(nextMonthDate, currentCoordinates, isHebrew() ,calendarType);
       return [...prevMonths, newMonth];
     });
   };
@@ -78,7 +80,7 @@ const CalendarScreen: React.FC = () => {
       scrollEventThrottle={16}
       >
       {months.map((month, index) => {
-        const { startOfMonth, endOfMonth } = month.getStartAndEndMonth(calendarType);
+        const { startOfMonth, endOfMonth } = month.getStartAndEndMonth();
         return (
           <Month
               key={index}

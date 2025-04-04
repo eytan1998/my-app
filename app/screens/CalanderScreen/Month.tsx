@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions, Text } from 'react-native';
-import { directions } from '@/assets/LanguageConfig';
+import { directions, languages } from '@/assets/LanguageConfig';
 import { useLanguage } from '@/app/hooks/LanguageContext';
 import { useLocation } from '@/app/hooks/LocationContext';
 import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
@@ -15,9 +15,9 @@ interface MonthProps {
 
 const Month: React.FC<MonthProps> = ({ startDate, endDate, onDayPress }) => {
     const { calendarType } = useCalendarSettings();
-    const { direction } = useLanguage();
+    const { direction,isHebrew } = useLanguage();
     const { currentCoordinates } = useLocation();
-    const dateUtils = new DateUtils(startDate, currentCoordinates);
+    const dateUtils = new DateUtils(startDate, currentCoordinates,isHebrew(),calendarType );
 
     const getDaysInRange = (start: Date, end: Date): Date[] => {
         const days: Date[] = [];
@@ -46,7 +46,7 @@ const Month: React.FC<MonthProps> = ({ startDate, endDate, onDayPress }) => {
             week.push(
                 <View key={day.toISOString()} style={styles.daySlot}>
                     <Day
-                        givenDay={new DateUtils(day,currentCoordinates)}
+                        givenDay={new DateUtils(day,currentCoordinates,isHebrew(),calendarType)}
                         events={
                             <>
                                 {/* Add any icons or elements to represent events here */}
@@ -87,7 +87,7 @@ const Month: React.FC<MonthProps> = ({ startDate, endDate, onDayPress }) => {
         <View style={styles.monthGrid}>
             <View style={{ alignItems: 'center', marginVertical: 10 }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                    {dateUtils.getMonthTitle(calendarType)}
+                    {dateUtils.getMonthTitle()}
                 </Text>
             </View>
             {renderGrid(days)}

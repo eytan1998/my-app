@@ -9,15 +9,26 @@ import { CalendarSettingsProvider,CalendarType } from '@/app/hooks/CalendarSetti
 class DateUtils {
     private date: Date;
     private coordinates: Coordinates;
+    private isHebrew: boolean;
+    private calendarType: CalendarType;
 
     /**
      * Constructor for DateUtils.
      * @param date - The date to initialize with. Defaults to the current date.
      * @param coordinates - The geographical coordinates for zmanim calculations.
+     * @param isHebrew - Whether the calendar is in Hebrew format.
+     * @param calendarType - The type of calendar ('gregorian' or 'jewish').
      */
-    constructor(date: Date = new Date(), coordinates: Coordinates) {
+    constructor(
+        date: Date = new Date(),
+        coordinates: Coordinates,
+        isHebrew: boolean = false,
+        calendarType: CalendarType = CalendarType.Jewish
+    ) {
         this.date = date;
         this.coordinates = coordinates;
+        this.isHebrew = isHebrew;
+        this.calendarType = calendarType;
     }
 
     /**
@@ -26,7 +37,6 @@ class DateUtils {
     get currentDate(): Date {
         return this.date;
     }
-    
 
     /**
      * Checks if the current date is today.
@@ -103,6 +113,7 @@ class DateUtils {
     getJewishDateDay(): string {
         const jewishCalendar = new JewishCalendar(this.date);
         const hebrewDateFormatter = new HebrewDateFormatter();
+        hebrewDateFormatter.setHebrewFormat(this.isHebrew);
         return hebrewDateFormatter.formatHebrewNumber(jewishCalendar.getJewishDayOfMonth()).toString();
     }
 
@@ -135,7 +146,7 @@ class DateUtils {
     getParash(): string | null {
         const jewishCalendar = new JewishCalendar(this.date);
         const hebrewDateFormatter = new HebrewDateFormatter();
-        hebrewDateFormatter.setHebrewFormat(true);
+        hebrewDateFormatter.setHebrewFormat(this.isHebrew);
         return jewishCalendar.getParsha() ? hebrewDateFormatter.formatParsha(jewishCalendar) : null;
     }
 
@@ -145,7 +156,7 @@ class DateUtils {
     getYomTov(): string | null {
         const jewishCalendar = new JewishCalendar(this.date);
         const hebrewDateFormatter = new HebrewDateFormatter();
-        hebrewDateFormatter.setHebrewFormat(true);
+        hebrewDateFormatter.setHebrewFormat(this.isHebrew);
         return jewishCalendar.isYomTov() ? hebrewDateFormatter.formatYomTov(jewishCalendar) : null;
     }
 
@@ -155,7 +166,7 @@ class DateUtils {
     getOmerCounting(): string | null {
         const jewishCalendar = new JewishCalendar(this.date);
         const hebrewDateFormatter = new HebrewDateFormatter();
-        hebrewDateFormatter.setHebrewFormat(true);
+        hebrewDateFormatter.setHebrewFormat(this.isHebrew);
         return hebrewDateFormatter.formatOmer(jewishCalendar);
     }
 
@@ -163,8 +174,8 @@ class DateUtils {
      * Gets the start and end of the current month based on the calendar type.
      * @param calendarType - The type of calendar ('gregorian' or 'jewish').
      */
-    getStartAndEndMonth(calendarType: CalendarType): { startOfMonth: Date; endOfMonth: Date } {
-        switch (calendarType) {
+    getStartAndEndMonth(): { startOfMonth: Date; endOfMonth: Date } {
+        switch (this.calendarType) {
             case CalendarType.Gregorian:
                 return this.getGregorianStartAndEndMonth();
             case CalendarType.Jewish:
@@ -205,21 +216,25 @@ class DateUtils {
     /**
      * Gets the title of the current month, combining both Jewish and Gregorian months.
      */
-    getMonthTitle(calendarType: CalendarType): string {
-        // todo MAKE getGregorianStartAndEndMonth FROM ABOVE AND NOT STATIC
-        const { startOfMonth: startDate, endOfMonth: endDate } = this.getStartAndEndMonth(calendarType);
+    getMonthTitle(): string {
+        const { startOfMonth: startDate, endOfMonth: endDate } = this.getStartAndEndMonth();
+
         const hebrewDateFormatter = new HebrewDateFormatter();
-        hebrewDateFormatter.setHebrewFormat(true);
+        hebrewDateFormatter.setHebrewFormat(this.isHebrew);
 
         const startJewishCalendar = new JewishCalendar(startDate);
         const endJewishCalendar = new JewishCalendar(endDate);
 
         const startMonthJewish = hebrewDateFormatter.formatMonth(startJewishCalendar);
         const endMonthJewish = hebrewDateFormatter.formatMonth(endJewishCalendar);
-        const yearJewish = hebrewDateFormatter.formatHebrewNumber(startJewishCalendar.getJewishYear()).toString();
+        const yearJewish = hebrewDateFormatter.formatHebrewNumber(startJewishCalendar.getJewishYear());
 
-        const startMonthGreg = startDate.toLocaleString('default', { month: 'long' });
-        const endMonthGreg = endDate.toLocaleString('default', { month: 'long' });
+        const startMonthGreg = this.isHebrew
+            ? startDate.toLocaleString('he-IL', { month: 'long' })
+            : startDate.toLocaleString('default', { month: 'long' });
+        const endMonthGreg = this.isHebrew
+            ? endDate.toLocaleString('he-IL', { month: 'long' })
+            : endDate.toLocaleString('default', { month: 'long' });
         const yearGreg = startDate.getFullYear();
 
         // Handle cases where the Jewish months differ
@@ -257,7 +272,7 @@ class DateUtils {
     toJewishString(): string {
         const jewishCalendar = new JewishCalendar(this.date);
         const hebrewDateFormatter = new HebrewDateFormatter();
-        hebrewDateFormatter.setHebrewFormat(true);
+        hebrewDateFormatter.setHebrewFormat(this.isHebrew);
         return `${hebrewDateFormatter.format(jewishCalendar)}`;
         }
 }

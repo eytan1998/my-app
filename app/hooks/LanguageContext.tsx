@@ -9,6 +9,7 @@ interface LanguageContextType {
   setLanguage: (lang: languages) => void;
   direction: directions;
   translations: typeof Translations[languages]; // Add translations to the context type
+  isHebrew: () => boolean; // Add isHebrew function to the context type
 }
 
 const LanguageContext = createContext<LanguageContextType>({
@@ -18,6 +19,7 @@ const LanguageContext = createContext<LanguageContextType>({
   },
   direction: LanguageConfig[DEFAULT_LANGUAGE].direction,
   translations: Translations[DEFAULT_LANGUAGE], // Default translations
+  isHebrew: () => false, // Default implementation
 });
 
 export const useLanguage = () => useContext(LanguageContext);
@@ -53,13 +55,16 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     // Save the selected language
     await AsyncStorage.setItem('appLanguage', lang);
-
   };
 
+  // Define the isHebrew function
+  const isHebrew = () => language === languages.he;
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, direction, translations }}>
+    <LanguageContext.Provider value={{ language, setLanguage, direction, translations, isHebrew }}>
       {children}
     </LanguageContext.Provider>
   );
 };
+
 export default LanguageProvider;
