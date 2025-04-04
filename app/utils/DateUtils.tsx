@@ -1,6 +1,7 @@
 import { addDays, format } from 'date-fns';
 import { ComplexZmanimCalendar, GeoLocation, HebrewDateFormatter, JewishCalendar } from 'kosher-zmanim';
-import { Coordinates } from '../hooks/LocationContext';
+import { Coordinates } from '@/app/hooks/LocationContext';
+import { CalendarSettingsProvider,CalendarType } from '@/app/hooks/CalendarSettings';
 
 /**
  * Utility class for handling dates, including Jewish calendar calculations and zmanim.
@@ -157,10 +158,25 @@ class DateUtils {
         hebrewDateFormatter.setHebrewFormat(true);
         return hebrewDateFormatter.formatOmer(jewishCalendar);
     }
+
+    /**
+     * Gets the start and end of the current month based on the calendar type.
+     * @param calendarType - The type of calendar ('gregorian' or 'jewish').
+     */
+    getStartAndEndMonth(calendarType: CalendarType): { startOfMonth: Date; endOfMonth: Date } {
+        switch (calendarType) {
+            case CalendarType.Gregorian:
+                return this.getGregorianStartAndEndMonth();
+            case CalendarType.Jewish:
+                return this.getJewishStartAndEndMonth();
+            default:
+                throw new Error('Invalid calendar type. Use "gregorian" or "jewish".');
+        }
+    }
     /**
      * Gets the start and end of the current Gregorian month.
      */
-    getGregorianStartAndEndMonth(): { startOfMonth: Date; endOfMonth: Date } {
+    private getGregorianStartAndEndMonth(): { startOfMonth: Date; endOfMonth: Date } {
       const startOfMonth = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
       const endOfMonth = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0);
       return { startOfMonth, endOfMonth };
@@ -169,7 +185,7 @@ class DateUtils {
     /**
      * Gets the start and end of the current Jewish month.
      */
-    getJewishStartAndEndMonth(): { startOfMonth: Date; endOfMonth: Date } {
+    private getJewishStartAndEndMonth(): { startOfMonth: Date; endOfMonth: Date } {
         const jewishCalendar = new JewishCalendar(this.date);
         const startOfMonthJew = new JewishCalendar(this.date);
         startOfMonthJew.setJewishDayOfMonth(1);
@@ -189,9 +205,9 @@ class DateUtils {
     /**
      * Gets the title of the current month, combining both Jewish and Gregorian months.
      */
-    getMonthTitle(): string {
+    getMonthTitle(calendarType: CalendarType): string {
         // todo MAKE getGregorianStartAndEndMonth FROM ABOVE AND NOT STATIC
-        const { startOfMonth: startDate, endOfMonth: endDate } = this.getJewishStartAndEndMonth();
+        const { startOfMonth: startDate, endOfMonth: endDate } = this.getStartAndEndMonth(calendarType);
         const hebrewDateFormatter = new HebrewDateFormatter();
         hebrewDateFormatter.setHebrewFormat(true);
 

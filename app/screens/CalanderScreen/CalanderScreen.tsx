@@ -3,6 +3,7 @@ import { StyleSheet, Modal, View, ScrollView ,Text, Button} from 'react-native';
 import Month from '@/app/screens/CalanderScreen/Month';
 import DateUtils from '@/app/utils/DateUtils';
 import { useLocation } from '@/app/hooks/LocationContext';
+import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
 
 const CalendarScreen: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<DateUtils | null>(null);
@@ -19,6 +20,7 @@ const CalendarScreen: React.FC = () => {
   };
 
   const { currentCoordinates } = useLocation();
+  const { calendarType} = useCalendarSettings();
 
   // Initialize with two months: current and previous
   const [months, setMonths] = useState(() => {
@@ -75,14 +77,17 @@ const CalendarScreen: React.FC = () => {
       }}
       scrollEventThrottle={16}
       >
-      {months.map((month, index) => (
-        <Month
-        key={index}
-        startDate={month.getJewishStartAndEndMonth().startOfMonth}
-        endDate={month.getJewishStartAndEndMonth().endOfMonth}
-        onDayPress={handleDayPress}
-        />
-      ))}
+      {months.map((month, index) => {
+        const { startOfMonth, endOfMonth } = month.getStartAndEndMonth(calendarType);
+        return (
+          <Month
+              key={index}
+              startDate={startOfMonth}
+              endDate={endOfMonth}
+              onDayPress={handleDayPress}
+          />
+        );
+      })}
       </ScrollView>
 
       <Modal visible={isModalVisible} transparent={true} animationType="slide">

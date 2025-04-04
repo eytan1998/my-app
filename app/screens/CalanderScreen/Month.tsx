@@ -3,6 +3,7 @@ import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import { directions } from '@/assets/LanguageConfig';
 import { useLanguage } from '@/app/hooks/LanguageContext';
 import { useLocation } from '@/app/hooks/LocationContext';
+import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
 import Day from '@/app/screens/CalanderScreen/Day';
 import DateUtils from '@/app/utils/DateUtils';
 
@@ -13,6 +14,7 @@ interface MonthProps {
 }
 
 const Month: React.FC<MonthProps> = ({ startDate, endDate, onDayPress }) => {
+    const { calendarType } = useCalendarSettings();
     const { direction } = useLanguage();
     const { currentCoordinates } = useLocation();
     const dateUtils = new DateUtils(startDate, currentCoordinates);
@@ -85,7 +87,7 @@ const Month: React.FC<MonthProps> = ({ startDate, endDate, onDayPress }) => {
         <View style={styles.monthGrid}>
             <View style={{ alignItems: 'center', marginVertical: 10 }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                    {dateUtils.getMonthTitle()}
+                    {dateUtils.getMonthTitle(calendarType)}
                 </Text>
             </View>
             {renderGrid(days)}
