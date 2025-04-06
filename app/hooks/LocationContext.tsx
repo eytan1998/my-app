@@ -37,29 +37,43 @@ const requestLocationPermissions = async () => {
 };
 
 export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentCoordinates, setCurrentLocation] = useState<Coordinates>({
-    latitude: 31.778002796877995,
-    longitude: 35.235342741831445,
-    altitude: 700,
-  });
-  const [savedLocations, setSavedLocations] = useState<string[]>([]);
-  const [selectedLocation, setSelectedLocationState] = useState<string | null>(null);
+  const DEFAULT_LOCATION = {
+    name: 'Temple, Jerusalem',
+    coordinates: {
+      latitude: 31.778002796877995,
+      longitude: 35.235342741831445,
+      altitude: 700,
+    },
+  };
+
+  const [currentCoordinates, setCurrentLocation] = useState<Coordinates>(DEFAULT_LOCATION.coordinates);
+  const [savedLocations, setSavedLocations] = useState<string[]>([DEFAULT_LOCATION.name]);
+  const [selectedLocation, setSelectedLocationState] = useState<string | null>(DEFAULT_LOCATION.name);
 
   useEffect(() => {
     const loadInitialData = async () => {
       const locations = await StorageService.load(STORAGE_KEYS.savedLocations);
       if (locations) {
         setSavedLocations(JSON.parse(locations));
+      } else {
+        // Save the default location to AsyncStorage if no saved locations exist
+        await StorageService.save(STORAGE_KEYS.savedLocations, JSON.stringify([DEFAULT_LOCATION.name]));
       }
 
       const coordinates = await StorageService.load(STORAGE_KEYS.currentCoordinates);
       if (coordinates) {
         setCurrentLocation(JSON.parse(coordinates));
+      } else {
+        // Save the default coordinates to AsyncStorage if no current coordinates exist
+        await StorageService.save(STORAGE_KEYS.currentCoordinates, JSON.stringify(DEFAULT_LOCATION.coordinates));
       }
 
       const savedSelectedLocation = await StorageService.load(STORAGE_KEYS.selectedLocation);
       if (savedSelectedLocation) {
         setSelectedLocationState(savedSelectedLocation);
+      } else {
+        // Save the default selected location to AsyncStorage if no selected location exists
+        await StorageService.save(STORAGE_KEYS.selectedLocation, DEFAULT_LOCATION.name);
       }
     };
 
@@ -139,7 +153,6 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     </LocationContext.Provider>
   );
 };
-
 export const useLocation = () => {
   const context = useContext(LocationContext);
   if (!context) {
