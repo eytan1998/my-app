@@ -108,6 +108,8 @@ export const CalendarSettingsProvider: React.FC<{ children: React.ReactNode }> =
         </CalendarSettingsContext.Provider>
     );
 };
+export default CalendarSettingsContext;
+
 
 export const useCalendarSettings = () => {
     const context = useContext(CalendarSettingsContext);
