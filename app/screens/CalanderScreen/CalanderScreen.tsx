@@ -8,6 +8,8 @@ import { useLocation } from '@/app/hooks/LocationContext';
 import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
 import DaysHeader from './DaysHeader';
 import { EventType,Events} from '@/assets/Models/Events/Events';
+import { Directions } from 'react-native-gesture-handler';
+import { directions } from '@/assets/LanguageConfig';
 
 const CalendarScreen: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<DateUtils | null>(null);
@@ -25,7 +27,8 @@ const CalendarScreen: React.FC = () => {
 
   const { currentCoordinates,selectedLocation} = useLocation();
   const { calendarType} = useCalendarSettings();
-  const { isHebrew, translations} = useLanguage();
+  const { isHebrew, translations,direction} = useLanguage();
+  const isRTL = direction === directions.rtl;
 
   // Initialize with two months: current and previous
   const [months, setMonths] = useState(() => {
@@ -100,7 +103,12 @@ const CalendarScreen: React.FC = () => {
 
       <Modal visible={isModalVisible} transparent={true} animationType="slide">
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+          <View
+            style={[
+              styles.modalContent,
+              isRTL && styles.modalContentRTL, // Apply RTL styles if needed
+            ]}
+          >
             {selectedDay && (
               <>
                 <Text style={styles.modalTitle}>Day Details</Text>
@@ -116,6 +124,7 @@ const CalendarScreen: React.FC = () => {
                 <Text>{translations.Omer_counting}: {selectedDay.getOmerCounting()}</Text>
                 <Text>{translations.Event}: {translations[testEvent]}</Text>
                 {/* Dynamically render buttons for actions */}
+                <Text>{'\n'}</Text>
                 {actionsForTestEvent.map((action) => (
                   <Button
                     key={action}
@@ -152,6 +161,10 @@ const styles = StyleSheet.create({
       padding: 20,
       backgroundColor: 'white',
       borderRadius: 10,
+  },
+  modalContentRTL: {
+    direction: 'rtl', // Set text direction to RTL
+    // alignItems: 'flex-start', // Align content to the right
   },
   modalTitle: {
       fontSize: 18,
