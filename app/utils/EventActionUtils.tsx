@@ -107,3 +107,8 @@ const handleAddMoreVeset = (date: DateUtils) => {
     console.log('Handling ADD_MORE_VESET for date:', date);
     // Add your logic here
 };
+
+// Export all handlers and the main function as a default export
+export default {
+    handleAction,
+};

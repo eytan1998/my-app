@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { StyleSheet, Modal, View, ScrollView ,Text, Button} from 'react-native';
 import Month from '@/app/screens/CalanderScreen/Month';
 import DateUtils, { zmanim } from '@/app/utils/DateUtils';
+import {handleAction} from '@/app/utils/EventActionUtils';
 import { useLanguage } from '@/app/hooks/LanguageContext';
 import { useLocation } from '@/app/hooks/LocationContext';
 import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
 import DaysHeader from './DaysHeader';
+import { EventType,Events} from '@/assets/Models/Events/Events';
 
 const CalendarScreen: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<DateUtils | null>(null);
@@ -57,67 +59,80 @@ const CalendarScreen: React.FC = () => {
     });
   };
 
+
+  const testEvent = EventType.STAIN;
+  const actionsForTestEvent = Events.getActionsForEvent(testEvent);
+
   return (
-    
     <View style={styles.container}>
-      <DaysHeader/>
+      <DaysHeader />
       <ScrollView
-      onScroll={({ nativeEvent }) => {
-        const { contentOffset, contentSize, layoutMeasurement } = nativeEvent;
-        const isScrolledToTop = contentOffset.y <= 0;
-        const isScrolledToBottom =
-        contentOffset.y + layoutMeasurement.height >= contentSize.height;
+        onScroll={({ nativeEvent }) => {
+          const { contentOffset, contentSize, layoutMeasurement } = nativeEvent;
+          const isScrolledToTop = contentOffset.y <= 0;
+          const isScrolledToBottom =
+            contentOffset.y + layoutMeasurement.height >= contentSize.height;
 
-        if (isScrolledToTop) {
-        console.log('Scrolled to top, adding month to top');
-        addMonthToTop();
-        }
+          if (isScrolledToTop) {
+            console.log('Scrolled to top, adding month to top');
+            addMonthToTop();
+          }
 
-        if (isScrolledToBottom) {
-        console.log('Scrolled to bottom, adding month to bottom');
-        addMonthToBottom();
-        }
-      }}
-      scrollEventThrottle={16}
+          if (isScrolledToBottom) {
+            console.log('Scrolled to bottom, adding month to bottom');
+            addMonthToBottom();
+          }
+        }}
+        scrollEventThrottle={16}
       >
-      {months.map((month, index) => {
-        const { startOfMonth, endOfMonth } = month.getStartAndEndMonth();
-        return (
-          <Month
+        {months.map((month, index) => {
+          const { startOfMonth, endOfMonth } = month.getStartAndEndMonth();
+          return (
+            <Month
               key={index}
               startDate={startOfMonth}
               endDate={endOfMonth}
               onDayPress={handleDayPress}
-          />
-        );
-      })}
+            />
+          );
+        })}
       </ScrollView>
 
       <Modal visible={isModalVisible} transparent={true} animationType="slide">
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-        {selectedDay && (
-          <>
-            <Text style={styles.modalTitle}>Day Details</Text>
-            <Text>The zmanim are according to location: {selectedLocation}</Text>
-            <Text>Jewish Date: {selectedDay.toJewishString()}</Text>
-            <Text>{translations.sunrise}: {selectedDay.getZman(zmanim.Sunrise)}</Text>
-            <Text>{translations.plag_mincha}: {selectedDay.getZman(zmanim.PlagMincha)}</Text>
-            <Text>{translations.sunset}: {selectedDay.getZman(zmanim.Sunset)}</Text>
-            <Text>{translations.tzet_kochavim}: {selectedDay.getZman(zmanim.TzetKochavim)}</Text>
-          <Text>Gregorian Date: {selectedDay.toGregorianString()}</Text>
-          <Text>Parasha: {selectedDay.getParash()}</Text>
-          <Text>Yom Tov: {selectedDay.getYomTov()}</Text>
-          <Text>Omer Counting: {selectedDay.getOmerCounting()}</Text>
-          {/* Add options to edit events, add messages, etc. */}
-          <Button title="Edit Events" onPress={() => console.log('Edit events')} />
-          </>
-        )}
-        <Button title="Close" onPress={closeModal} />
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {selectedDay && (
+              <>
+                <Text style={styles.modalTitle}>Day Details</Text>
+                <Text>The zmanim are according to location: {selectedLocation}</Text>
+                <Text>Jewish Date: {selectedDay.toJewishString()}</Text>
+                <Text>{translations.sunrise}: {selectedDay.getZman(zmanim.Sunrise)}</Text>
+                <Text>{translations.plag_mincha}: {selectedDay.getZman(zmanim.PlagMincha)}</Text>
+                <Text>{translations.sunset}: {selectedDay.getZman(zmanim.Sunset)}</Text>
+                <Text>{translations.tzet_kochavim}: {selectedDay.getZman(zmanim.TzetKochavim)}</Text>
+                <Text>Gregorian Date: {selectedDay.toGregorianString()}</Text>
+                <Text>Parasha: {selectedDay.getParash()}</Text>
+                <Text>Yom Tov: {selectedDay.getYomTov()}</Text>
+                <Text>Omer Counting: {selectedDay.getOmerCounting()}</Text>
+
+                {/* Dynamically render buttons for actions */}
+                {actionsForTestEvent.map((action) => (
+                  <Button
+                    key={action}
+                    title={`Perform ${action}`}
+                    onPress={() => {
+                      if (selectedDay) {
+                        handleAction(selectedDay, action);
+                      }
+                    }}
+                  />
+                ))}
+              </>
+            )}
+            <Button title="Close" onPress={closeModal} />
+          </View>
         </View>
-      </View>
       </Modal>
-      
     </View>
   );
 };
