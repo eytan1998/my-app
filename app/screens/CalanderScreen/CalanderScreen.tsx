@@ -114,7 +114,7 @@ const CalendarScreen: React.FC = () => {
                 <Text>Parasha: {selectedDay.getParash()}</Text>
                 <Text>Yom Tov: {selectedDay.getYomTov()}</Text>
                 <Text>Omer Counting: {selectedDay.getOmerCounting()}</Text>
-
+                <Text>{translations.Event}: {translations[testEvent]}</Text>
                 {/* Dynamically render buttons for actions */}
                 {actionsForTestEvent.map((action) => (
                   <Button

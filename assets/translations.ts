@@ -56,6 +56,7 @@ export const Translations = {
     daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
     // Event descriptions
+    Event: "Event",
     [EventType.FIRST_DAY_OF_VESET_IN_DAY]: "The first day of Veset during the day.",
     [EventType.FIRST_DAY_OF_VESET_IN_NIGHT]: "The first day of Veset during the night.",
     [EventType.STAIN]: "A stain event.",
@@ -138,9 +139,10 @@ export const Translations = {
     daysOfWeek: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
 
     // Event descriptions
+    Event: "אירוע",
     [EventType.FIRST_DAY_OF_VESET_IN_DAY]: "היום הראשון של וסת במהלך היום.",
     [EventType.FIRST_DAY_OF_VESET_IN_NIGHT]: "היום הראשון של וסת במהלך הלילה.",
-    [EventType.STAIN]: "אירוע כתם.",
+    [EventType.STAIN]: "כתם.",
     [EventType.VESET]: "אירוע וסת.",
     [EventType.VESET_TO_STAIN]: "מעבר מווסת לכתם.",
     [EventType.VESET_TO_CLEAN]: "מעבר מווסת לנקי.",
