@@ -6,24 +6,27 @@ import { Translations } from '@/assets/translations';
 
 interface LanguageContextType {
   language: languages;
-  setLanguage: (lang: languages) => void;
+  toggleLanguage: () => void; // Updated to toggle language
   direction: directions;
-  translations: typeof Translations[languages]; // Add translations to the context type
-  isHebrew: () => boolean; // Add isHebrew function to the context type
+  translations: typeof Translations[languages];
+  isHebrew: () => boolean;
 }
 
 const LanguageContext = createContext<LanguageContextType>({
   language: DEFAULT_LANGUAGE,
-  setLanguage: () => {
-    throw new Error('setLanguage must be used within a LanguageProvider');
+  toggleLanguage: () => {
+    throw new Error('toggleLanguage must be used within a LanguageProvider');
   },
   direction: LanguageConfig[DEFAULT_LANGUAGE].direction,
-  translations: Translations[DEFAULT_LANGUAGE], // Default translations
-  isHebrew: () => false, // Default implementation
+  translations: Translations[DEFAULT_LANGUAGE],
+  isHebrew: () => false,
 });
 
 export const useLanguage = () => useContext(LanguageContext);
-
+// Keys for AsyncStorage
+const STORAGE_KEYS = {
+  appLanguage: 'appLanguage',
+};
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<languages>(DEFAULT_LANGUAGE);
   const [direction, setDirection] = useState<directions>(LanguageConfig[DEFAULT_LANGUAGE].direction);
@@ -31,10 +34,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     Translations[DEFAULT_LANGUAGE]
   );
 
+  // Load saved language from AsyncStorage when the provider initializes
   useEffect(() => {
-    // Load saved language from AsyncStorage
     const loadLanguage = async () => {
-      const savedLanguage = (await AsyncStorage.getItem('appLanguage')) as languages | null;
+      const savedLanguage = (await AsyncStorage.getItem(STORAGE_KEYS.appLanguage)) as languages | null;
       if (savedLanguage && LanguageConfig[savedLanguage]) {
         setLanguage(savedLanguage);
       }
@@ -42,26 +45,33 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     loadLanguage();
   }, []);
 
+  // Function to set the language and persist it in AsyncStorage
   const setLanguage = async (lang: languages) => {
     if (!LanguageConfig[lang]) return; // Ensure the language is supported
 
     setLanguageState(lang);
     setDirection(LanguageConfig[lang].direction);
-    setTranslations(Translations[lang]); // Update translations
+    setTranslations(Translations[lang]);
 
     // Update the layout direction
     const isRTL = LanguageConfig[lang].direction === directions.rtl;
     I18nManager.forceRTL(isRTL);
 
-    // Save the selected language
-    await AsyncStorage.setItem('appLanguage', lang);
+    // Save the selected language to AsyncStorage
+    await AsyncStorage.setItem(STORAGE_KEYS.appLanguage, lang);
+  };
+
+  // Function to toggle between Hebrew and English
+  const toggleLanguage = async () => {
+    const nextLanguage = language === languages.he ? languages.en : languages.he; // Toggle between Hebrew and English
+    await setLanguage(nextLanguage);
   };
 
   // Define the isHebrew function
-  const isHebrew = () => language === languages.he;
+  const isHebrew = () => language === 'he';
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, direction, translations, isHebrew }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage, direction, translations, isHebrew }}>
       {children}
     </LanguageContext.Provider>
   );

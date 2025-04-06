@@ -1,13 +1,9 @@
 import React from 'react';
 import { View, Button, Text, Switch } from 'react-native';
-import { useTheme } from '@/app/hooks/ThemeContext';
+import { useCalendarSettings, CalendarType } from '@/app/hooks/CalendarSettings';
 import { useLanguage } from '@/app/hooks/LanguageContext';
-import { useCalendarSettings,CalendarType } from '@/app/hooks/CalendarSettings';
-import { directions, languages } from '@/assets/LanguageConfig';
 
 export default function SettingsScreen() {
-    const { theme } = useTheme();
-    const { language, setLanguage, direction } = useLanguage();
     const {
         calendarType,
         showOmer,
@@ -19,19 +15,14 @@ export default function SettingsScreen() {
         toggleShowParash,
     } = useCalendarSettings();
 
-    const toggleLanguage = () => {
-        const nextLanguage = language === languages.en ? languages.he : languages.en;
-        setLanguage(nextLanguage);
-    };
-
+    const { toggleLanguage, isHebrew } = useLanguage();
     return (
-        <View style={{ flex: 1, padding: 16, alignItems: direction === directions.rtl ? 'flex-end' : 'flex-start' }}>
-            <Text>Language: {language}</Text>
-            <Button title="Toggle Language" onPress={toggleLanguage} />
-
-            {/* <Text>Theme: {theme}</Text> */}
-            {/* Add a button or toggle for theme switching if needed */}
-
+        <View style={{ flex: 1, padding: 16 }}>
+            <Text>Language</Text>
+            <Button
+                title={`Switch to ${isHebrew() ? 'English' : 'Hebrew'}`}
+                onPress={toggleLanguage}
+            />
             <Text>Calendar Type</Text>
             <Button
                 title={`Switch to ${calendarType === CalendarType.Gregorian ? CalendarType.Jewish : CalendarType.Gregorian} Calendar`}
