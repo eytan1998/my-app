@@ -6,6 +6,14 @@ export enum CalendarType {
     Jewish = 'jewish',
 }
 
+// Default values for settings
+const DEFAULT = {
+    calendarType: CalendarType.Jewish,
+    showOmer: true,
+    showYomTov: true,
+    showParash: true,
+};
+
 interface CalendarSettingsContextProps {
     calendarType: CalendarType;
     showOmer: boolean;
@@ -20,10 +28,10 @@ interface CalendarSettingsContextProps {
 const CalendarSettingsContext = createContext<CalendarSettingsContextProps | undefined>(undefined);
 
 export const CalendarSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [calendarType, setCalendarTypeState] = useState<CalendarType>(CalendarType.Jewish);
-    const [showOmer, setShowOmerState] = useState(true);
-    const [showYomTov, setShowYomTovState] = useState(true);
-    const [showParash, setShowParashState] = useState(true);
+    const [calendarType, setCalendarTypeState] = useState<CalendarType>(DEFAULT.calendarType);
+    const [showOmer, setShowOmerState] = useState(DEFAULT.showOmer);
+    const [showYomTov, setShowYomTovState] = useState(DEFAULT.showYomTov);
+    const [showParash, setShowParashState] = useState(DEFAULT.showParash);
 
     // Keys for AsyncStorage
     const STORAGE_KEYS = {
@@ -41,10 +49,10 @@ export const CalendarSettingsProvider: React.FC<{ children: React.ReactNode }> =
             const savedShowYomTov = await StorageService.load(STORAGE_KEYS.showYomTov);
             const savedShowParash = await StorageService.load(STORAGE_KEYS.showParash);
 
-            if (savedCalendarType) setCalendarTypeState(savedCalendarType as CalendarType);
-            if (savedShowOmer) setShowOmerState(savedShowOmer === 'true');
-            if (savedShowYomTov) setShowYomTovState(savedShowYomTov === 'true');
-            if (savedShowParash) setShowParashState(savedShowParash === 'true');
+            setCalendarTypeState(savedCalendarType ? (savedCalendarType as CalendarType) : DEFAULT.calendarType);
+            setShowOmerState(savedShowOmer ? savedShowOmer === 'true' : DEFAULT.showOmer);
+            setShowYomTovState(savedShowYomTov ? savedShowYomTov === 'true' : DEFAULT.showYomTov);
+            setShowParashState(savedShowParash ? savedShowParash === 'true' : DEFAULT.showParash);
         };
 
         loadSettings();
