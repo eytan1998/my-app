@@ -5,6 +5,7 @@ import DateUtils from '@/app/utils/DateUtils';
 import { useLanguage } from '@/app/hooks/LanguageContext';
 import { useLocation } from '@/app/hooks/LocationContext';
 import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
+import DaysHeader from './DaysHeader';
 
 const CalendarScreen: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<DateUtils | null>(null);
@@ -59,7 +60,7 @@ const CalendarScreen: React.FC = () => {
   return (
     
     <View style={styles.container}>
-      
+      <DaysHeader/>
       <ScrollView
       onScroll={({ nativeEvent }) => {
         const { contentOffset, contentSize, layoutMeasurement } = nativeEvent;
