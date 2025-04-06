@@ -19,7 +19,7 @@ const Day: React.FC<DayProps> = ({ givenDay, onDayPress }) => {
     };
     return (
         <TouchableWithoutFeedback onPress={handlePress}>
-            <View style={[styles.container]}>
+            <View style={[styles.container, isToday && styles.todayOutline]}>
                 {/* Top-left: Image */}
                 <View style={styles.topLeft}>
                     <Image source={require('@/assets/images/blue.png')} style={styles.image} />
