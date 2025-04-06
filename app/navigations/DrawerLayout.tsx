@@ -33,10 +33,10 @@ export default function DrawerLayout() {
             }}
             />
             <Drawer.Screen
-            name="Profile"
+            name="Locations"
             component={LocationSettingScreeen}
             options={{ 
-              title: translations.profile || 'User Profile',
+              title: translations.Locations || 'Locations',
             }}
             />
             <Drawer.Screen
@@ -79,8 +79,8 @@ function CustomDrawerContent(props: any) {
       <TouchableOpacity style={styles.drawerItem} onPress={() => props.navigation.navigate('CalendarScreen')}>
         <Text>{translations.home}</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.drawerItem} onPress={() => props.navigation.navigate('Profile')}>
-        <Text>{translations.profile}</Text>
+      <TouchableOpacity style={styles.drawerItem} onPress={() => props.navigation.navigate('Locations')}>
+        <Text>{translations.Locations}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.drawerItem} onPress={() => props.navigation.navigate('Settings')}>
         <Text>{translations.settings}</Text>
