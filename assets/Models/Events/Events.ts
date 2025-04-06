@@ -1,4 +1,4 @@
-import { Translations } from '../../assets/translations';
+import { Translations } from '@/assets/translations';
 
 // Enum for all possible events
 export enum EventType {
