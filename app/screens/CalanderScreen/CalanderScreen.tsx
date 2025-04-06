@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Modal, View, ScrollView ,Text, Button} from 'react-native';
 import Month from '@/app/screens/CalanderScreen/Month';
-import DateUtils from '@/app/utils/DateUtils';
+import DateUtils, { zmanim } from '@/app/utils/DateUtils';
 import { useLanguage } from '@/app/hooks/LanguageContext';
 import { useLocation } from '@/app/hooks/LocationContext';
 import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
@@ -21,9 +21,9 @@ const CalendarScreen: React.FC = () => {
       setSelectedDay(null); // Clear the selected day
   };
 
-  const { currentCoordinates } = useLocation();
+  const { currentCoordinates,selectedLocation} = useLocation();
   const { calendarType} = useCalendarSettings();
-  const { isHebrew} = useLanguage();
+  const { isHebrew, translations} = useLanguage();
 
   // Initialize with two months: current and previous
   const [months, setMonths] = useState(() => {
@@ -98,8 +98,13 @@ const CalendarScreen: React.FC = () => {
         <View style={styles.modalContent}>
         {selectedDay && (
           <>
-          <Text style={styles.modalTitle}>Day Details</Text>
-          <Text>Jewish Date: {selectedDay.toJewishString()}</Text>
+            <Text style={styles.modalTitle}>Day Details</Text>
+            <Text>The zmanim are according to location: {selectedLocation}</Text>
+            <Text>Jewish Date: {selectedDay.toJewishString()}</Text>
+            <Text>{translations.sunrise}: {selectedDay.getZman(zmanim.Sunrise)}</Text>
+            <Text>{translations.plag_mincha}: {selectedDay.getZman(zmanim.PlagMincha)}</Text>
+            <Text>{translations.sunset}: {selectedDay.getZman(zmanim.Sunset)}</Text>
+            <Text>{translations.tzet_kochavim}: {selectedDay.getZman(zmanim.TzetKochavim)}</Text>
           <Text>Gregorian Date: {selectedDay.toGregorianString()}</Text>
           <Text>Parasha: {selectedDay.getParash()}</Text>
           <Text>Yom Tov: {selectedDay.getYomTov()}</Text>
