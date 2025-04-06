@@ -227,7 +227,8 @@ class DateUtils {
 
         const startMonthJewish = hebrewDateFormatter.formatMonth(startJewishCalendar);
         const endMonthJewish = hebrewDateFormatter.formatMonth(endJewishCalendar);
-        const yearJewish = hebrewDateFormatter.formatHebrewNumber(startJewishCalendar.getJewishYear());
+        const yearJewish = (this.isHebrew ? hebrewDateFormatter.formatHebrewNumber(startJewishCalendar.getJewishYear())
+        : startJewishCalendar.getJewishYear()).toString();
 
         const startMonthGreg = this.isHebrew
             ? startDate.toLocaleString('he-IL', { month: 'long' })
