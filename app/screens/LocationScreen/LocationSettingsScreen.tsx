@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import { useLocation } from '@/app/hooks/LocationContext';
 
-import {useLocation} from '@/app/hooks/LocationContext';
 
 const LocationSettingsScreen: React.FC = () => {
-  const [savedLocations, setSavedLocations] = useState<string[]>([]);
-  const [currentLocation, setCurrentLocation] = useState<string>(''); // Add state for currentLocation
-  const { currentCoordinates,setCurrentCoordinatesWithAdress} = useLocation(); // Access coordinates from the context
+  const [currentLocation, setCurrentLocation] = useState<string>(''); // Input for new location
+  const {
+    currentCoordinates,
+    savedLocations,
+    selectedLocation,
+    saveLocation,
+    deleteLocation,
+    setSelectedLocation,
+  } = useLocation(); // Access location context
 
-  const handleSaveLocation = () => {
-    // Logic to save the current location
+  const handleSaveLocation = async () => {
     if (currentLocation.trim()) {
-      setSavedLocations([...savedLocations, currentLocation]);
+      await saveLocation(currentLocation); // Save the location using LocationContext
       setCurrentLocation(''); // Clear the input after saving
     }
   };
 
-  const handleTextChange = (text: string) => {
-    setCurrentLocation(text); // Update the currentLocation state
+  const handleSelectLocation = async (address: string) => {
+    console.log('Selected address:', address);
+    await setSelectedLocation(address); // Use LocationContext to set the selected location
   };
 
-  const handleSelectLocation = (address: string) => {
-    console.log('Selected address:', address);
-    setCurrentCoordinatesWithAdress(address);
+  const handleDeleteLocation = async (address: string) => {
+    await deleteLocation(address); // Delete the location using LocationContext
   };
 
   return (
@@ -32,7 +37,7 @@ const LocationSettingsScreen: React.FC = () => {
         style={styles.input}
         placeholder="Enter location"
         value={currentLocation}
-        onChangeText={handleTextChange} // Use the handler function
+        onChangeText={setCurrentLocation} // Update the currentLocation state
       />
       <Button title="Save Location" onPress={handleSaveLocation} />
       <Text style={styles.subtitle}>Saved Locations:</Text>
@@ -41,19 +46,32 @@ const LocationSettingsScreen: React.FC = () => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.locationItem}>
-            <Text>{item}</Text>
-            <Button title="Select" onPress={() => handleSelectLocation(item)} />
+            <Text style={selectedLocation === item ? styles.selectedText : undefined}>{item}</Text>
+            <Button
+              title="Select"
+              onPress={() => handleSelectLocation(item)}
+              disabled={selectedLocation === item} // Disable if this is the selected location
+            />
+            <Button
+              title="Delete"
+              onPress={() => handleDeleteLocation(item)}
+              disabled={selectedLocation === item} // Disable if this is the selected location
+            />
           </View>
         )}
       />
+      {selectedLocation && (
+        <Text style={styles.selectedLocation}>
+          Selected Location: {selectedLocation}
+        </Text>
+      )}
       <Text style={styles.coordinates}>
-          Current Coordinates: {`Lat: ${currentCoordinates.latitude}
-          Lng: ${currentCoordinates.longitude}
-          elevation: ${currentCoordinates.altitude}`}
+        Current Coordinates: {`Lat: ${currentCoordinates.latitude}, Lng: ${currentCoordinates.longitude}, Elevation: ${currentCoordinates.altitude || 'N/A'}`}
       </Text>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -85,6 +103,16 @@ const styles = StyleSheet.create({
     padding: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  selectedText: {
+    fontWeight: 'bold',
+    color: '#007BFF',
+  },
+  selectedLocation: {
+    marginTop: 16,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#007BFF',
   },
   coordinates: {
     marginTop: 16,
