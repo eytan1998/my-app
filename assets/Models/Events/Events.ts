@@ -40,39 +40,39 @@ export class Events {
   // Map of events to their metadata
   private static eventDetails: Record<EventType, EventMetadata> = {
     [EventType.FIRST_DAY_OF_VESET_IN_DAY]: {
-      icon: '/assets/Events/veset_day.png',
+      icon: require('@/assets/images/veset_day.png'),
       actions: [Action.DELETE],
     },
     [EventType.FIRST_DAY_OF_VESET_IN_NIGHT]: {
-      icon: '/assets/Events/veset_night.png',
+      icon: require('@/assets/images/veset_night.png'),
       actions: [Action.DELETE],
     },
     [EventType.STAIN]: {
-      icon: '/assets/Events/stain.png',
-      actions: [Action.DELETE , Action.HAPSEK_TAHOR_STAIN, Action.HAPSEK_TAMEI_STAIN],
+      icon: require('@/assets/images/stain.png'),
+      actions: [Action.DELETE, Action.HAPSEK_TAHOR_STAIN, Action.HAPSEK_TAMEI_STAIN],
     },
     [EventType.VESET]: {
-      icon: '/assets/Events/veset.png',
+      icon: require('@/assets/images/veset.png'),
       actions: [Action.HAPSEK_TAHOR_VEST],
     },
     [EventType.VESET_TO_STAIN]: {
-      icon: '/assets/Events/veset_to_stain.png',
+      icon: require('@/assets/images/veset_to_stain.png'),
       actions: [Action.DELETE],
     },
     [EventType.VESET_TO_CLEAN]: {
-      icon: '/assets/Events/veset_to_clean.png',
+      icon: require('@/assets/images/veset_to_clean.png'),
       actions: [Action.DELETE],
     },
     [EventType.CLEAN]: {
-      icon: '/assets/Events/clean.png',
-      actions: [Action.DELETE, Action.ADD_DAY_VESET, Action.ADD_NIGHT_VESET , Action.ADD_STAIN],
+      icon: require('@/assets/images/clean.png'),
+      actions: [Action.DELETE, Action.ADD_DAY_VESET, Action.ADD_NIGHT_VESET, Action.ADD_STAIN],
     },
     [EventType.MIKVE]: {
-      icon: '/assets/Events/mikve.png',
-      actions: [Action.DELETE, Action.ADD_DAY_VESET, Action.ADD_NIGHT_VESET , Action.ADD_STAIN],
+      icon: require('@/assets/images/mikve.png'),
+      actions: [Action.DELETE, Action.ADD_DAY_VESET, Action.ADD_NIGHT_VESET, Action.ADD_STAIN],
     },
     [EventType.STAIN_TO_CLEAN]: {
-      icon: '/assets/Events/stain_to_clean.png',
+      icon: require('@/assets/images/stain_to_clean.png'),
       actions: [Action.DELETE],
     },
   };
@@ -82,13 +82,8 @@ export class Events {
     const eventMetadata = this.eventDetails[eventType];
     return eventMetadata ? eventMetadata.actions : [];
   }
-  // Get metadata for a specific event
-  static getEventDetails(eventType: EventType): EventMetadata {
-    return this.eventDetails[eventType];
-  }
-
-  // Get all events and their metadata
-  static getAllEvents(): Record<EventType, EventMetadata> {
-    return this.eventDetails;
-  }
+  // Get icon for a specific event
+  static getIconForEvent(eventType: EventType): any {
+    return this.eventDetails[eventType]?.icon;
+}
 }

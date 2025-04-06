@@ -2,6 +2,7 @@ import DateUtils from '@/app/utils/DateUtils';
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { useCalendarSettings } from '@/app/hooks/CalendarSettings';
+import { Events, EventType } from '@/assets/Models/Events/Events';
 
 interface DayProps {
     givenDay: DateUtils;
@@ -17,13 +18,20 @@ const Day: React.FC<DayProps> = ({ givenDay, onDayPress }) => {
     const handlePress = () => {
         onDayPress(givenDay); // Notify the parent when the day is clicked
     };
+
+
+  const testEvent = EventType.MIKVE;
+  const eventIcon = Events.getIconForEvent(testEvent);
+  
     return (
         <TouchableWithoutFeedback onPress={handlePress}>
             <View style={[styles.container, isToday && styles.todayOutline]}>
                 {/* Top-left: Image */}
-                <View style={styles.topLeft}>
-                    <Image source={require('@/assets/images/blue.png')} style={styles.image} />
-                </View>
+                {eventIcon && (
+                    <View style={styles.topLeft}>
+                        <Image source={eventIcon} style={styles.image} />
+                    </View>
+                )}
                 {/* Top-right: Jewish Date */}
                 <View style={styles.topRight}>
                     <Text
