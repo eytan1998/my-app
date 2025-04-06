@@ -7,7 +7,6 @@ export enum languages {
   he = 'he',
   // add
 }
-export const DEFAULT_LANGUAGE = languages.en; 
 
 export const LanguageConfig = {
   [languages.en]: {
