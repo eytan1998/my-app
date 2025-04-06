@@ -111,9 +111,9 @@ const CalendarScreen: React.FC = () => {
                 <Text>{translations.sunset}: {selectedDay.getZman(zmanim.Sunset)}</Text>
                 <Text>{translations.tzet_kochavim}: {selectedDay.getZman(zmanim.TzetKochavim)}</Text>
                 <Text>Gregorian Date: {selectedDay.toGregorianString()}</Text>
-                <Text>Parasha: {selectedDay.getParash()}</Text>
-                <Text>Yom Tov: {selectedDay.getYomTov()}</Text>
-                <Text>Omer Counting: {selectedDay.getOmerCounting()}</Text>
+                <Text>{translations.Parasha}: {selectedDay.getParash()}</Text>
+                <Text>{translations.Yom_tov}: {selectedDay.getYomTov()}</Text>
+                <Text>{translations.Omer_counting}: {selectedDay.getOmerCounting()}</Text>
                 <Text>{translations.Event}: {translations[testEvent]}</Text>
                 {/* Dynamically render buttons for actions */}
                 {actionsForTestEvent.map((action) => (

@@ -52,6 +52,9 @@ export const Translations = {
     plag_mincha: "Plag Mincha",
     tzet_kochavim: "Tzet Kochavim",
     sunset: "Sunset",
+    Parasha: "Parasha",
+    Yom_tov: "Yom Tov",
+    Omer_counting: "Omer Counting",
 
     daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
@@ -86,6 +89,7 @@ export const Translations = {
     [Prisha.OT_ZARIHA_ONAA_BENONIT_BEFORE_SUNRISE]: "Special Intermediate Veset before sunrise.",
     [Prisha.OT_ZARIHA_ONAA_BENONIT_DAY]: "Special Intermediate Veset during the day.",
     [Prisha.OT_ZARIHA_ONAA_BENONIT_AFTER_SUNSET]: "Special Intermediate Veset after sunset.",
+
  },
   [languages.he]: {
     app_name: "שבע לב",
@@ -135,7 +139,10 @@ export const Translations = {
     plag_mincha: "פלג מנחה",
     tzet_kochavim: "צאת הכוכבים",
     sunset: "שקיעה",
-
+    Parasha: "פרשה",
+    Yom_tov: "יום טוב",
+    Omer_counting: "ספירת העומר",
+    
     daysOfWeek: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
 
     // Event descriptions
@@ -169,6 +176,7 @@ export const Translations = {
     [Prisha.OT_ZARIHA_ONAA_BENONIT_BEFORE_SUNRISE]: "וסת מיוחד בינונית לפני הזריחה.",
     [Prisha.OT_ZARIHA_ONAA_BENONIT_DAY]: "וסת מיוחד בינונית במהלך היום.",
     [Prisha.OT_ZARIHA_ONAA_BENONIT_AFTER_SUNSET]: "וסת מיוחד בינונית אחרי השקיעה.",
+
  
   },
   // [languages.fr]: {
