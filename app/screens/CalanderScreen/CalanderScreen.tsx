@@ -10,6 +10,7 @@ import DaysHeader from './DaysHeader';
 import { EventType,Events} from '@/assets/Models/Events/Events';
 import { Directions } from 'react-native-gesture-handler';
 import { directions } from '@/assets/LanguageConfig';
+import { useAuth } from '@/app/hooks/AuthContext';
 
 const CalendarScreen: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<DateUtils | null>(null);
@@ -26,6 +27,7 @@ const CalendarScreen: React.FC = () => {
   };
 
   const { currentCoordinates,selectedLocation} = useLocation();
+  const { userId} = useAuth();
   const { calendarType} = useCalendarSettings();
   const { isHebrew, translations,direction} = useLanguage();
   const isRTL = direction === directions.rtl;
@@ -63,7 +65,7 @@ const CalendarScreen: React.FC = () => {
   };
 
 
-  const testEvent = EventType.STAIN;
+  const testEvent = null;
   const actionsForTestEvent = Events.getActionsForEvent(testEvent);
 
   return (
@@ -122,7 +124,7 @@ const CalendarScreen: React.FC = () => {
                 <Text>{translations.Parasha}: {selectedDay.getParash()}</Text>
                 <Text>{translations.Yom_tov}: {selectedDay.getYomTov()}</Text>
                 <Text>{translations.Omer_counting}: {selectedDay.getOmerCounting()}</Text>
-                <Text>{translations.Event}: {translations[testEvent]}</Text>
+                <Text>{testEvent && translations[testEvent]}</Text>
                 {/* Dynamically render buttons for actions */}
                 <Text>{'\n'}</Text>
                 {actionsForTestEvent.map((action) => (
@@ -131,7 +133,7 @@ const CalendarScreen: React.FC = () => {
                     title={`Perform ${action}`}
                     onPress={() => {
                       if (selectedDay) {
-                        handleAction(selectedDay, action);
+                        handleAction(userId, selectedDay, action);
                       }
                     }}
                   />

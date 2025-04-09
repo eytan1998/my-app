@@ -20,7 +20,7 @@ const Day: React.FC<DayProps> = ({ givenDay, onDayPress }) => {
     };
 
 
-  const testEvent = EventType.MIKVE;
+  const testEvent = null;
   const eventIcon = Events.getIconForEvent(testEvent);
   
     return (

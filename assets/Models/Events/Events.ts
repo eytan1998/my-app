@@ -78,12 +78,18 @@ export class Events {
   };
 
   // Get actions for a specific event
-  static getActionsForEvent(eventType: EventType): Action[] {
+  static getActionsForEvent(eventType: EventType | null): Action[] {
+    if (!eventType) {
+      return DEFAULT_EVENT_METADATA.actions;
+    }
     const eventMetadata = this.eventDetails[eventType];
     return eventMetadata ? eventMetadata.actions : [];
   }
   // Get icon for a specific event
-  static getIconForEvent(eventType: EventType): any {
+  static getIconForEvent(eventType: EventType | null): any {
+    if (!eventType) {
+      return DEFAULT_EVENT_METADATA.icon;
+    }
     return this.eventDetails[eventType]?.icon;
 }
 }

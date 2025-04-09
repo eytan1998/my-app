@@ -1,47 +1,26 @@
-import { CalendarDay } from './CalendarDay';
-import { Prisha } from './Prisha';
+import { EventType } from './Events/Events';
 
-
-export interface Locations {
-  [locationId: string]: {
-    latitude: number;
-    longitude: number;
-    name: string;
+export interface MonthMetadata {
+  [date: string]: {
+    eventType: EventType | null;
+    message: string;
   };
 }
 
-export interface Events {
-  [date: string]: CalendarDay;
-}
-
 export class UserData {
-  locations: Locations;
-  prisha: Prisha;
-  events: Events;
+  months: { [month: string]: MonthMetadata };
 
-  constructor(locations: Locations, prisha: Prisha, events: Events) {
-    this.locations = locations;
-    this.prisha = prisha;
-    this.events = events;
+  constructor(months: { [month: string]: MonthMetadata }) {
+    this.months = months;
   }
 
   // Convert to a format suitable for Firestore
-  toDatabaseObject() {
-    return {
-      locations: this.locations,
-      prisha: this.prisha,
-      events: Object.fromEntries(
-        Object.entries(this.events).map(([date, event]) => [date, event.toDatabaseObject()])
-      ),
-    };
+  toDatabaseObject(month: string) {
+    return this.months[month] || {};
   }
 
   // Create a UserData instance from Firestore data
-  static fromDatabaseObject(dbObject: any): UserData {
-    const events = Object.fromEntries(
-      Object.entries(dbObject.events || {}).map(([date, event]) => [date, CalendarDay.fromDatabaseObject(event)])
-    );
-
-    return new UserData(dbObject.locations || {}, dbObject.prisha || {}, events);
+  static fromDatabaseObject(month: string, dbObject: any): MonthMetadata {
+    return dbObject || {};
   }
 }

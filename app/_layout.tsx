@@ -13,7 +13,7 @@ export default function Layout() {
     <LanguageProvider>
       <LocationProvider>
         <CalendarSettingsProvider>
-          <DrawerLayout />
+          <AppNavigator />
         </CalendarSettingsProvider>
       </LocationProvider>
     </LanguageProvider>

@@ -4,6 +4,7 @@ import { auth } from '@/assets/firebase/firebaseConfig';
 
 interface AuthContextType {
   currentUser: any;
+  userId: string;
   login: (email: string, password: string) => Promise<UserCredential>;
   signup: (email: string, password: string) => Promise<UserCredential>;
   logout: () => Promise<void>;
@@ -26,6 +27,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const isAuthenticated = !!currentUser;
 
+  // Extract userId from currentUser
+  const userId = currentUser?.uid || null;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -35,40 +38,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return unsubscribe;
   }, []);
 
-
   const signup = async (email: string, password: string) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     // Send verification email after account creation
     await sendEmailVerification(userCredential.user);
     return userCredential;
-
   };
 
   const login = async (email: string, password: string) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential;
-    }
-    catch (error) {
+    } catch (error) {
       throw error;
     }
   };
 
   const logout = async () => {
-    await signOut(auth)
+    await signOut(auth);
   };
 
   const resetPassword = async (email: string) => {
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (error) {
-        throw error;
+      throw error;
     }
   };
 
-
   return (
-    <AuthContext.Provider value={{ currentUser, login, signup, logout,resetPassword, isAuthenticated }}>
+    <AuthContext.Provider value={{ currentUser, userId, login, signup, logout, resetPassword, isAuthenticated }}>
       {!loading && children}
     </AuthContext.Provider>
   );
