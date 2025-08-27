@@ -12,11 +12,16 @@
     "test:coverage": "jest --coverage",
     "lint": "expo lint"
   },
-  "jest": {
-    "preset": "jest-expo",
-    "collectCoverage": true,
-    "coverageDirectory": "coverage"
-  },
+"jest": {
+  "preset": "jest-expo",
+  "collectCoverage": true,
+  "coverageDirectory": "coverage",
+  "collectCoverageFrom": [
+    "app/**/*.{js,jsx,ts,tsx}",
+    "assets/Models/**/*.{js,ts}"
+  ],
+  "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"]
+},
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "^1.24.0",
