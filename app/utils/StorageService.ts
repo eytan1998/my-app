@@ -1,11 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {log,LogLevel} from '@/app/utils/Logger';
 
+const fileName = 'StorageService.ts';
 const StorageService = {
     // Save a key-value pair
     async save(key: string, value: string) {
         try {
             await AsyncStorage.setItem(key, value);
-            console.log(`Saved ${key}: ${value}`);
+            log(LogLevel.DEBUG,`Saved ${key}: ${value}`);
         } catch (error) {
             console.error(`Error saving ${key}:`, error);
         }
@@ -15,10 +17,10 @@ const StorageService = {
     async load(key: string): Promise<string | null> {
         try {
             const value = await AsyncStorage.getItem(key);
-            console.log(`Loaded ${key}: ${value}`);
+            log(LogLevel.DEBUG,`Loaded ${key}: ${value}`,fileName);
             return value;
         } catch (error) {
-            console.error(`Error loading ${key}:`, error);
+            log(LogLevel.ERROR,`Error loading ${key}:`,fileName, error);
             return null;
         }
     },
@@ -27,9 +29,9 @@ const StorageService = {
     async remove(key: string) {
         try {
             await AsyncStorage.removeItem(key);
-            console.log(`Removed ${key}`);
+            log(LogLevel.DEBUG,`Removed ${key}`,fileName);
         } catch (error) {
-            console.error(`Error removing ${key}:`, error);
+            log(LogLevel.ERROR,`Error removing ${key}:`,fileName, error);
         }
     },
 
@@ -37,9 +39,9 @@ const StorageService = {
     async clear() {
         try {
             await AsyncStorage.clear();
-            console.log('Cleared all AsyncStorage data');
+            log(LogLevel.DEBUG,'Cleared all AsyncStorage data',fileName);
         } catch (error) {
-            console.error('Error clearing AsyncStorage:', error);
+            log(LogLevel.ERROR,'Error clearing AsyncStorage:',fileName, error);
         }
     },
 };
