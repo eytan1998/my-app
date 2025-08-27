@@ -2,6 +2,7 @@ import DateUtils from '@/app/utils/DateUtils';
 import {UserData} from '@/assets/Models/UserData';
 import { addEventToDay, removeEventFromDay } from '@/assets/firebase/firebaseService';
 import { Action, EventType } from '@/assets/Models/Events/Events';
+import { log, LogLevel } from '@/app/utils/Logger';
 /**
  * Handles an action for a given date by invoking the corresponding function.
  * @param date The date to process.
@@ -33,7 +34,7 @@ export const handleAction = (userId: string, date: DateUtils, action: Action) =>
  * @param date The date to process.
  */
 const handleAddDayVeset = (userId: string, date: DateUtils) => {
-    console.log('Handling ADD_DAY_VESET for user:', userId, 'date:', date);
+    log(LogLevel.INFO, `Handling ADD_DAY_VESET for user: ${userId}, date: ${date}`, 'EventActionUtils.tsx');
     addEventToDay(userId, date.currentDate, EventType.FIRST_DAY_OF_VESET_IN_DAY);
 };
 
@@ -42,7 +43,7 @@ const handleAddDayVeset = (userId: string, date: DateUtils) => {
  * @param date The date to process.
  */
 const handleAddNightVeset = (userId: string, date: DateUtils) => {
-    console.log('Handling ADD_NIGHT_VESET for user:', userId, 'date:', date);
+    log(LogLevel.INFO, `Handling ADD_NIGHT_VESET for user: ${userId}, date: ${date}`, 'EventActionUtils.tsx');
     addEventToDay(userId, date.currentDate, EventType.FIRST_DAY_OF_VESET_IN_NIGHT);
 };
 
@@ -51,7 +52,7 @@ const handleAddNightVeset = (userId: string, date: DateUtils) => {
  * @param date The date to process.
  */
 const handleAddStain = (userId: string, date: DateUtils) => {
-    console.log('Handling ADD_STAIN for user:', userId, 'date:', date);
+    log(LogLevel.INFO, `Handling ADD_STAIN for user: ${userId}, date: ${date}`, 'EventActionUtils.tsx');
     addEventToDay(userId, date.currentDate, EventType.STAIN);
 };
 
@@ -60,7 +61,7 @@ const handleAddStain = (userId: string, date: DateUtils) => {
  * @param date The date to process.
  */
 const handleDelete = (userId: string, date: DateUtils) => {
-    console.log('Handling DELETE for user:', userId, 'date:', date);
+    log(LogLevel.INFO, `Handling DELETE for user: ${userId}, date: ${date}`, 'EventActionUtils.tsx');
     removeEventFromDay(userId, date.currentDate);
 };
 
@@ -69,7 +70,7 @@ const handleDelete = (userId: string, date: DateUtils) => {
  * @param date The date to process.
  */
 const handleHapsekTahorVest = (userId: string, date: DateUtils) => {
-    console.log('Handling HAPSEK_TAHOR_VEST for user:', userId, 'date:', date);
+    log(LogLevel.INFO, `Handling HAPSEK_TAHOR_VEST for user: ${userId}, date: ${date}`, 'EventActionUtils.tsx');
     addEventToDay(userId, date.currentDate, EventType.VESET_TO_CLEAN);
 };
 
@@ -78,7 +79,7 @@ const handleHapsekTahorVest = (userId: string, date: DateUtils) => {
  * @param date The date to process.
  */
 const handleHapsekTahorStain = (userId: string, date: DateUtils) => {
-    console.log('Handling HAPSEK_TAHOR_STAIN for user:', userId, 'date:', date);
+    log(LogLevel.INFO, `Handling HAPSEK_TAHOR_STAIN for user: ${userId}, date: ${date}`, 'EventActionUtils.tsx');
     addEventToDay(userId, date.currentDate, EventType.STAIN_TO_CLEAN);
 };
 
@@ -87,7 +88,7 @@ const handleHapsekTahorStain = (userId: string, date: DateUtils) => {
  * @param date The date to process.
  */
 const handleHapsekTameiVest = (userId: string, date: DateUtils) => {
-    console.log('Handling HAPSEK_TAMEI_VEST for user:', userId, 'date:', date);
+    log(LogLevel.INFO, `Handling HAPSEK_TAMEI_VEST for user: ${userId}, date: ${date}`, 'EventActionUtils.tsx');
     // addEventToDay(userId, date.currentDate, EventType.);
 };
 
@@ -96,7 +97,7 @@ const handleHapsekTameiVest = (userId: string, date: DateUtils) => {
  * @param date The date to process.
  */
 const handleHapsekTameiStain = (userId: string, date: DateUtils) => {
-    console.log('Handling HAPSEK_TAMEI_STAIN for user:', userId, 'date:', date);
+    log(LogLevel.INFO, `Handling HAPSEK_TAMEI_STAIN for user: ${userId}, date: ${date}`, 'EventActionUtils.tsx');
     // addEventToDay(userId, date.currentDate, EventType.HAPSEK_TAMEI_STAIN);
 };
 
@@ -105,7 +106,7 @@ const handleHapsekTameiStain = (userId: string, date: DateUtils) => {
  * @param date The date to process.
  */
 const handleAddMoreVeset = (userId: string, date: DateUtils) => {
-    console.log('Handling ADD_MORE_VESET for user:', userId, 'date:', date);
+    log(LogLevel.INFO, `Handling ADD_MORE_VESET for user: ${userId}, date: ${date}`, 'EventActionUtils.tsx');
     // addEventToDay(userId, date.currentDate, EventType.MORE_VESET);
 };
 

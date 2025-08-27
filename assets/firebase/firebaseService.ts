@@ -2,6 +2,7 @@ import { doc, setDoc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/assets/firebase/firebaseConfig';
 import { MonthMetadata, UserData } from '@/assets/Models/UserData';
 import { EventType } from '../Models/Events/Events';
+import { log, LogLevel } from '@/app/utils/Logger';
 
 const USERS_COLLECTION = 'users';
 const MONTHS_COLLECTION = 'months';
@@ -25,9 +26,9 @@ export const saveUserData = async (userId: string, userData: UserData) => {
   const userDoc = doc(db, USERS_COLLECTION, userId);
   try {
     await setDoc(userDoc, { months: userData.months });
-    console.log(`User data saved for user ${userId}`);
+    log(LogLevel.INFO, `User data saved for user ${userId}`, 'firebaseService.ts');
   } catch (error) {
-    console.error(`Error saving user data for user ${userId}:`, error);
+    log(LogLevel.ERROR, `Error saving user data for user ${userId}: ${error}`, 'firebaseService.ts');
   }
 };
 
@@ -36,15 +37,15 @@ export const getUserData = async (userId: string): Promise<UserData | null> => {
   try {
     const docSnap = await getDoc(userDoc);
     if (docSnap.exists()) {
-      console.log(`User data retrieved for user ${userId}`);
+      log(LogLevel.INFO, `User data retrieved for user ${userId}`, 'firebaseService.ts');
       const data = docSnap.data();
       return new UserData(data.months || {});
     } else {
-      console.log(`No user data found for user ${userId}`);
+      log(LogLevel.INFO, `No user data found for user ${userId}`, 'firebaseService.ts');
       return null;
     }
   } catch (error) {
-    console.error(`Error retrieving user data for user ${userId}:`, error);
+    log(LogLevel.ERROR, `Error retrieving user data for user ${userId}: ${error}`, 'firebaseService.ts');
     return null;
   }
 };
@@ -56,9 +57,9 @@ export const saveMonthEvents = async (
   const monthDoc = doc(db, USERS_COLLECTION, `${userId}/${MONTHS_COLLECTION}/${month}`);
   try {
     await setDoc(monthDoc, monthData, { merge: true }); // Merge ensures only updated fields are written
-    console.log(`Events for ${month} saved successfully for user ${userId}`);
+    log(LogLevel.INFO, `Events for ${month} saved successfully for user ${userId}`, 'firebaseService.ts');
   } catch (error) {
-    console.error(`Error saving events for ${month}:`, error);
+    log(LogLevel.ERROR, `Error saving events for ${month}: ${error}`, 'firebaseService.ts');
   }
 };
 
@@ -70,14 +71,14 @@ export const loadMonthEvents = async (
   try {
     const docSnap = await getDoc(monthDoc);
     if (docSnap.exists()) {
-      console.log(`Events for ${month} loaded successfully for user ${userId}`);
+      log(LogLevel.INFO, `Events for ${month} loaded successfully for user ${userId}`, 'firebaseService.ts');
       return docSnap.data() as MonthMetadata;
     } else {
-      console.log(`No events found for ${month} for user ${userId}`);
+      log(LogLevel.INFO, `No events found for ${month} for user ${userId}`, 'firebaseService.ts');
       return {};
     }
   } catch (error) {
-    console.error(`Error loading events for ${month}:`, error);
+    log(LogLevel.ERROR, `Error loading events for ${month}: ${error}`, 'firebaseService.ts');
     return {};
   }
 };
@@ -96,16 +97,16 @@ export const addEventToDay = async (
     await updateDoc(monthDoc, {
       [day]: { eventType },
     });
-    console.log(`Event added/updated for ${day} in ${month} for user ${userId}`);
+    log(LogLevel.INFO, `Event added/updated for ${day} in ${month} for user ${userId}`, 'firebaseService.ts');
   } catch (error: any) {
     if (error.code === 'not-found') {
       // If the document doesn't exist, create it
       await setDoc(monthDoc, {
         [day]: { eventType },
       });
-      console.log(`Document created and event added for ${day} in ${month} for user ${userId}`);
+      log(LogLevel.INFO, `Document created and event added for ${day} in ${month} for user ${userId}`, 'firebaseService.ts');
     } else {
-      console.error(`Error adding/updating event for ${day} in ${month}:`, error);
+      log(LogLevel.ERROR, `Error adding/updating event for ${day} in ${month}: ${error}`, 'firebaseService.ts');
     }
   }
 };
@@ -129,11 +130,11 @@ export const removeEventFromDay = async (
         // If the month is empty, delete the document
         await deleteDoc(monthDoc);
       }
-      console.log(`Event removed for ${day} in ${month} for user ${userId}`);
+      log(LogLevel.INFO, `Event removed for ${day} in ${month} for user ${userId}`, 'firebaseService.ts');
     } else {
-      console.log(`No event found for ${day} in ${month} for user ${userId}`);
+      log(LogLevel.INFO, `No event found for ${day} in ${month} for user ${userId}`, 'firebaseService.ts');
     }
   } catch (error) {
-    console.error(`Error removing event for ${day} in ${month}:`, error);
+    log(LogLevel.ERROR, `Error removing event for ${day} in ${month}: ${error}`, 'firebaseService.ts');
   }
 };
