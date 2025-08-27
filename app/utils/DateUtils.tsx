@@ -167,7 +167,7 @@ class DateUtils {
         const jewishCalendar = new JewishCalendar(this.date);
         const hebrewDateFormatter = new HebrewDateFormatter();
         hebrewDateFormatter.setHebrewFormat(this.isHebrew);
-        return hebrewDateFormatter.formatOmer(jewishCalendar);
+        return hebrewDateFormatter.formatOmer(jewishCalendar) !== '' ? hebrewDateFormatter.formatOmer(jewishCalendar) : null;
     }
 
     /**
