@@ -1,4 +1,5 @@
 import DateUtils from '@/app/utils/DateUtils';
+import {UserData} from '@/assets/Models/UserData';
 import { addEventToDay, removeEventFromDay } from '@/assets/firebase/firebaseService';
 import { Action, EventType } from '@/assets/Models/Events/Events';
 /**
@@ -6,7 +7,8 @@ import { Action, EventType } from '@/assets/Models/Events/Events';
  * @param date The date to process.
  * @param action The action to perform.
  */
-export const handleAction = (userId: string, date: DateUtils, action: Action) => {
+export const handleAction = (userId: string, date: DateUtils, action: Action,  userData: UserData,
+    setUserData: React.Dispatch<React.SetStateAction<UserData>>) => {
     const actionHandlers: Record<Action, (userId: string, date: DateUtils) => void> = {
         [Action.ADD_DAY_VESET]: handleAddDayVeset,
         [Action.ADD_NIGHT_VESET]: handleAddNightVeset,
