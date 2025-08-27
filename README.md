@@ -145,6 +145,51 @@ Create a `.env` file for sensitive configurations (e.g., API keys). Ensure `.env
 
 ---
 
+## 🧪 Testing
+
+This project uses [Jest](https://jestjs.io/) and [React Native Testing Library](https://testing-library.com/docs/react-native-testing-library/intro/) for unit and component testing.
+
+### Adding Tests
+
+- Create test files alongside your components or in a `__tests__` folder.
+- Name test files with `.test.ts` or `.test.tsx` (e.g., `MyComponent.test.tsx`).
+- Example test file for a component:
+  ```tsx
+  import React from 'react';
+  import { render } from '@testing-library/react-native';
+  import MyComponent from './MyComponent';
+
+  test('renders correctly', () => {
+    const { getByText } = render(<MyComponent />);
+    expect(getByText('Hello')).toBeTruthy();
+  });
+  ```
+
+### Running Tests
+
+- Run all tests:
+  ```bash
+  npm test
+  ```
+- Or, for more detailed output:
+  ```bash
+  npx jest
+  ```
+
+### Test Coverage
+
+- To see code coverage:
+  ```bash
+  npx jest --coverage
+  ```
+
+> Make sure you have `jest` and `@testing-library/react-native` installed. If not, install them with:
+> ```bash
+> npm install --save-dev jest @testing-library/react-native @testing-library/jest-native
+> ```
+
+---
+
 ## 📚 Learn More
 
 Explore these resources to learn more about the technologies used in this project:
