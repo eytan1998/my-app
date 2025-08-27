@@ -11,8 +11,11 @@ import { EventType,Events} from '@/assets/Models/Events/Events';
 import { Directions } from 'react-native-gesture-handler';
 import { directions } from '@/assets/LanguageConfig';
 import { useAuth } from '@/app/hooks/AuthContext';
+import  {log,LogLevel} from '@/app/utils/Logger';
+
 
 const CalendarScreen: React.FC = () => {
+  const fileName = 'CalanderScreen.tsx';
   const [selectedDay, setSelectedDay] = useState<DateUtils | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -79,12 +82,12 @@ const CalendarScreen: React.FC = () => {
             contentOffset.y + layoutMeasurement.height >= contentSize.height;
 
           if (isScrolledToTop) {
-            console.log('Scrolled to top, adding month to top');
+            log(LogLevel.INFO,'Scrolled to top, adding month to top',fileName);
             addMonthToTop();
           }
 
           if (isScrolledToBottom) {
-            console.log('Scrolled to bottom, adding month to bottom');
+            log(LogLevel.INFO,'Scrolled to bottom, adding month to bottom',fileName);
             addMonthToBottom();
           }
         }}
