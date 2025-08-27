@@ -9,10 +9,13 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
+    "test:coverage": "jest --coverage",
     "lint": "expo lint"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "collectCoverage": true,
+    "coverageDirectory": "coverage"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",

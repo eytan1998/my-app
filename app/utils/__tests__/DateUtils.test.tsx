@@ -61,4 +61,40 @@ describe('DateUtils', () => {
     expect(du.getYomTov()).toBe(null);
     expect(du.getOmerCounting()).toBe(null);
   });
+
+//   it('should return undefined for unknown zman', () => {
+//     const du = new DateUtils(new Date('2025-08-27'), coords);
+//     expect(du.getZman('UnknownZman' as any)).toBeUndefined();
+//   });
+
+//   it('should handle invalid date gracefully', () => {
+//     const du = new DateUtils(new Date('invalid-date'), coords);
+//     expect(() => du.getGregorianDateDay()).not.toThrow();
+//     expect(du.getGregorianDateDay()).toBeNaN();
+//   });
+
+//   it('should return Jewish day as number if not in Hebrew', () => {
+//     const du = new DateUtils(new Date('2025-08-27'), coords, false);
+//     expect(typeof du.getJewishDateDay()).toBe('string');
+//   });
+
+//   it('should get Gregorian month title', () => {
+//     const du = new DateUtils(new Date('2025-08-27'), coords, false, CalendarType.Gregorian);
+//     const title = du.getMonthTitle();
+//     expect(typeof title).toBe('string');
+//     expect(title.length).toBeGreaterThan(0);
+//   });
+
+//   it('should return null for Parash, YomTov, Omer if not available', () => {
+//     const du = new DateUtils(new Date('1999-01-01'), coords, true);
+//     expect(du.getParash()).toBeNull();
+//     expect(du.getYomTov()).toBeNull();
+//     expect(du.getOmerCounting()).toBeNull();
+//   });
+
+//   it('should allow setDate to invalid date', () => {
+//     const du = new DateUtils(new Date('2025-08-27'), coords);
+//     du.setDate(new Date('invalid-date'));
+//     expect(isNaN(du.currentDate.getTime())).toBe(true);
+//   });
 });
